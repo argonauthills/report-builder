@@ -1,8 +1,8 @@
 import Promise = require('bluebird')
 import types = require('../types')
-// var fs = require('fs')
+var fs = require('fs')
 // var babyParse = require('babyparse')
-// var readFile = Promise.promisify<string, string>(fs.readFile)
+var readFile = Promise.promisify<string, string, string>(fs.readFile)
 
 // export function fromCsv(pathToCsv:string):Promise<types.RawData> {
 //     return readFile(pathToCsv)
@@ -22,5 +22,9 @@ export function fromCsv(pathToCsv:string):Promise<types.RawData> {
             else resolve(result)
         })
     })
+}
 
+export function fromJson(pathToJson:string):Promise<types.ReportConfig> {
+    return readFile(pathToJson, 'utf8')
+    .then((data:string) => JSON.parse(data))
 }

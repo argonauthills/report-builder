@@ -25,6 +25,7 @@ export interface ReportConfig {
 }
 
 export interface ReportConfigSection {
+    header: string;
     questions: ReportConfigQuestion[];
 }
 

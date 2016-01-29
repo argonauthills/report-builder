@@ -51,10 +51,14 @@ function main() {
     }
 
     return Promise.resolve()
-    .then(() => parse.fromCsv(args.data))
-    .then((rawData: types.RawData) => {
+    .then(() => Promise.all([
+        parse.fromCsv(args.data),
+        parse.fromJson(args.config)
+    ]))
+    .spread(( rawData: types.RawData, config:types.ReportConfig) => {
         console.log("rawData", rawData[0], rawData[1])
         console.log("rawness!")
+        console.log("config", config)
         // let report = transform.rawToReport(rawData)
         // return output.runOutput(dummyReportData, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
     })
