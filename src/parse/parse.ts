@@ -15,9 +15,9 @@ var Converter = require("csvtojson").Converter;
 var converter = new Converter({ignoreEmpty:true});
 // var parse = Promise.promisify<string, string>(converter.fromFile)  // promisification seems to break the converter
 
-export function fromCsv(pathToCsv:string):Promise<types.RawData> {
-    return new Promise(function(resolve, reject) {
-        converter.fromFile(pathToCsv, function(err, result) {
+export function fromCsv(pathToCsv:string):Promise<types.RawDatum[]> {
+    return new Promise<types.RawDatum[]>(function(resolve, reject) {
+        converter.fromFile(pathToCsv, function(err, result:types.RawDatum[]) {
             if (err) reject(err)
             else resolve(result)
         })

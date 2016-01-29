@@ -5,12 +5,12 @@ export interface Report {
 }
 
 export interface ReportSection {
-    header: QuestionResult;
-    questions: QuestionResult[];
+    header: ReportQuestion;
+    questions: ReportQuestion[];
 }
 
-export interface QuestionResult {
-    question: string;
+export interface ReportQuestion {
+    description: string;
     orgScore: number;
     industryNorm: number;
     globalNorm: number;
@@ -21,6 +21,8 @@ export interface QuestionResult {
 
 
 export interface ReportConfig {
+    header: string;
+    description: string;
     sections: ReportConfigSection[];
 }
 
@@ -30,10 +32,13 @@ export interface ReportConfigSection {
 }
 
 export interface ReportConfigQuestion {
+    description: string;
     id: string;
     scale: number;
+    industryNorm: number;
+    globalNorm: number;
 }
 
-export interface RawData {
+export interface RawDatum {
     [key: string]: any;
 }
