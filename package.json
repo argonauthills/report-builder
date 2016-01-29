@@ -10,5 +10,8 @@
     "report"
   ],
   "author": "Jason Andrew Hills",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "tsd": "^0.6.5"
+  }
 }
