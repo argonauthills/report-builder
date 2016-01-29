@@ -1,20 +1,18 @@
-declare var __dirname: string;
-
 import Promise = require('bluebird')
-var path = require('path')
-var childProcess = require('child_process')
-var phantomjs = require('phantomjs')
-var binPath = phantomjs.path
-var execFile = Promise.promisify<any, string, string[]>(childProcess.execFile)
+import pdfConverter = require('./pdf-converter')
+import htmlBuilder = require('./html-builder')
+var fs = require('fs')
+var unlink = Promise.promisify<any, string>(fs.unlink)
 
-export function convertHtmlToPdf(htmlPath, destPath):Promise<any> {
-    var childArgs = [
-        path.join(__dirname, 'rasterize.js'),  // rasterize script
-        htmlPath,
-        destPath,
-        'letter'
-    ]
-
-    return execFile(binPath, childArgs)
+export function runOutput(data:any, templatePath:string, destPath:string, tempDir:string):Promise<any> {
+    return Promise.resolve(null)
+    .then(() => htmlBuilder.generateHtml(data, templatePath, tempDir))
+    .then((tempHtmlPath: string) => {
+        return pdfConverter.convertHtmlToPdf(tempHtmlPath, destPath)
+        // .then(() => cleanup(tempHtmlPath))
+    })
 }
 
+export function cleanUpFile(path:string):Promise<any> {
+    return unlink(path)
+}

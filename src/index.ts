@@ -13,9 +13,8 @@ function main() {
         console.log("Usage: node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf")
         return
     }
-    output.convertHtmlToPdf(args.data, args.dest)
+    output.runOutput(args.data, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
     .then(()=> console.log("converted!"))
-    console.log("success!")
 }
 
 main()

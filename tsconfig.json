@@ -5,6 +5,7 @@
     "files" : [
         "./typings/bluebird/bluebird.d.ts",
         "./typings/requirejs/require.d.ts",
+        "./typings/swig/swig.d.ts",
         "./src/index.ts"
     ]
 }
