@@ -1,0 +1,14 @@
+{
+  "name": "report-builder",
+  "version": "1.0.0",
+  "description": "A report-building tool",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "report"
+  ],
+  "author": "Jason Andrew Hills",
+  "license": "MIT"
+}

@@ -1,0 +1,56 @@
+/* RESET */
+/* apply a natural box layout model to all elements, but allowing components to change */
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+/* UTILITIES */
+.no-page-break {
+    /* page-break-inside: avoid;  phantomjs doesn't respect this; we're using this and the pseudo-selector hack instead */
+    display:inline-block;
+}
+.no-page-break:after {
+    content: '';
+    display:block;
+    height:0px;
+    visibility: hidden;
+}
+
+/* REPORT HEADER */
+.report-header {}
+.report-header-title {}
+.report-header-description {}
+
+/* REPORT SECTION */
+.report-section {}
+.report-section-header {}
+
+/* RESULTS */
+.results-table {}
+.results-table-header {}
+.results-table-row {}
+.results-table-question-cell {}
+.results-table-datum-cell {}
+.results-table-bar-chart-cell {}
+
+/* BAR CHART */
+.bar-chart {}
+.bar-chart-bar {
+    background-color: blue;
+}
+.bar-chart-symbol-1 {
+    background-color: black;
+}
+.bar-chart-symbol-2 {
+    background-color: red;
+}
+.bar-chart-division {
+    border: 1px solid gray;
+    height:100%;
+}
+
+
+
