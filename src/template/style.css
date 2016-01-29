@@ -32,22 +32,62 @@ html {
 .results-table {}
 .results-table-header {}
 .results-table-row {}
-.results-table-question-cell {}
-.results-table-datum-cell {}
-.results-table-bar-chart-cell {}
+
+.question-cell-width {}
+.datum-cell-width {
+    width: 100px;
+}
+.bar-chart-cell-width {
+    width: 300px;
+}
+
+.normal-row-height {
+    height: 50px;
+}
+.large-row-height {
+    height: 100px;
+}
+
 
 /* BAR CHART */
-.bar-chart {}
+.bar-chart {
+    position: relative;
+    width:100%;
+    height:100%;
+}
 .bar-chart-bar {
+    position:absolute;
+    left:0;
+    top:10;
+    bottom:10;
     background-color: blue;
 }
 .bar-chart-symbol-1 {
+    position:absolute;
+    top:10;
+    bottom:10;
+    width:20px;
+    margin-left:-10px;
     background-color: black;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
 }
 .bar-chart-symbol-2 {
+    position:absolute;
+    top:50%;
+    width:20px;
+    height:20px;
+    margin-top:-10px;
+    margin-left:-10px;
     background-color: red;
+    border: 1px solid white;
+    border-radius:10px;
 }
 .bar-chart-division {
+    position:absolute;
+    top:0;
+    bottom:0;
+    margin-left:-1px;
     border: 1px solid gray;
     height:100%;
 }
