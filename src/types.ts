@@ -16,3 +16,23 @@ export interface QuestionResult {
     globalNorm: number;
     scale: number;
 }
+
+
+
+
+export interface ReportConfig {
+    sections: ReportConfigSection[];
+}
+
+export interface ReportConfigSection {
+    questions: ReportConfigQuestion[];
+}
+
+export interface ReportConfigQuestion {
+    id: string;
+    scale: number;
+}
+
+export interface RawData {
+    [key: string]: any;
+}

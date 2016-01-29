@@ -1,8 +1,11 @@
 /// <reference path="../typings/requirejs/require.d.ts" />
 declare var process: any;
 
+import Promise = require('bluebird')
 import settings = require('./settings')
 import output = require('./output/output')
+import parse = require('./parse/parse')
+import transform = require('./transform/transform')
 import types = require('./types')
 var parseArgs = require('minimist')
 
@@ -41,14 +44,22 @@ var dummyReportData:types.Report = {
 
 function main() {
     var args = parseArgs(process.argv.slice(2))
-    console.log("args", args)
 
     if (!args.config || !args.dest || !args.data) {
         console.log("Usage: node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf")
         return
     }
-    output.runOutput(dummyReportData, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
-    .then(()=> console.log("converted!"))
+
+    return Promise.resolve()
+    .then(() => parse.fromCsv(args.data))
+    .then((rawData: types.RawData) => {
+        console.log("rawData", rawData[0], rawData[1])
+        console.log("rawness!")
+        // let report = transform.rawToReport(rawData)
+        // return output.runOutput(dummyReportData, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
+    })
+    .then(() => console.log("DONE!"))
+    .catch((err) => console.log("Err", err, err.stack))
 }
 
 main()
