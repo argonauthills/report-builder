@@ -6,6 +6,8 @@ Install
 
 - Install dependencies
     - NodeJS
+- `npm install`
+- `tsd install`
 
 Run
 ---

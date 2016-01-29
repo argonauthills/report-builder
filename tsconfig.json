@@ -3,6 +3,8 @@
         "module": "commonjs"
     },
     "files" : [
-        "./typings/requirejs/require.d.ts"
+        "./typings/bluebird/bluebird.d.ts",
+        "./typings/requirejs/require.d.ts",
+        "./src/index.ts"
     ]
 }

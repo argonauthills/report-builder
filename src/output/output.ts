@@ -1,8 +1,20 @@
-import execFile = require("child_process").execFile
+declare var __dirname: string;
 
+import Promise = require('bluebird')
+var path = require('path')
+var childProcess = require('child_process')
+var phantomjs = require('phantomjs')
+var binPath = phantomjs.path
+var execFile = Promise.promisify<any, string, string[]>(childProcess.execFile)
 
-export function htmlToPdf() {
+export function convertHtmlToPdf(htmlPath, destPath):Promise<any> {
+    var childArgs = [
+        path.join(__dirname, 'rasterize.js'),  // rasterize script
+        htmlPath,
+        destPath,
+        'letter'
+    ]
 
+    return execFile(binPath, childArgs)
 }
 
-export function initializeTempDir() {}

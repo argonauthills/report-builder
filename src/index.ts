@@ -2,6 +2,7 @@
 declare var process: any;
 
 import settings = require('./settings')
+import output = require('./output/output')
 var parseArgs = require('minimist')
 
 function main() {
@@ -12,7 +13,8 @@ function main() {
         console.log("Usage: node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf")
         return
     }
-
+    output.convertHtmlToPdf(args.data, args.dest)
+    .then(()=> console.log("converted!"))
     console.log("success!")
 }
 
