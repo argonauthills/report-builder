@@ -39,8 +39,6 @@ export interface ReportConfigQuestion {
     description: string;
     id: string;
     scale: number;
-    industryNorm: number;
-    globalNorm: number;
 }
 
 export interface RawDatum {

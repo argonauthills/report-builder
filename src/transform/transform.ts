@@ -1,9 +1,9 @@
 import types = require('../types')
 import _ = require('lodash')
 
-export function rawToReport(data:types.RawDatum[], config:types.ReportConfig):types.Report {
+export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.Report {
     var transformedSections:types.ReportSection[] = config.sections.map(function(configSection) {
-        return transformSection(data, configSection)
+        return transformSection(data, configSection, globalNorms, industryNorms)
     })
 
     return {
@@ -14,9 +14,9 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig):ty
 }
 
 
-function transformSection(data:types.RawDatum[], configSection:types.ReportConfigSection):types.ReportSection {
+function transformSection(data:types.RawDatum[], configSection:types.ReportConfigSection, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.ReportSection {
     var questions = configSection.questions.map((configQuestion)=>{
-        return transformQuestion(data, configQuestion)
+        return transformQuestion(data, configQuestion, globalNorms, industryNorms)
     })
     var header = sectionHeader(questions, configSection)
     var scale = _.first(questions).scale  // we get the section scale from the first question (they should all match anyway)
@@ -41,15 +41,22 @@ function sectionHeader(questions:types.ReportQuestion[], configSection:types.Rep
     }
 }
 
-function transformQuestion(data:types.RawDatum[], configQuestion:types.ReportConfigQuestion):types.ReportQuestion {
+function transformQuestion(data:types.RawDatum[], configQuestion:types.ReportConfigQuestion, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.ReportQuestion {
     var points = dataPoints(data, configQuestion.id)
+    var industryNorm = getNorm(industryNorms, configQuestion.id)
+    var globalNorm = getNorm(globalNorms, configQuestion.id)
     return {
         description: configQuestion.description,
         orgScore: mean(points),
-        industryNorm: configQuestion.industryNorm,
-        globalNorm: configQuestion.globalNorm,
+        industryNorm: industryNorm,
+        globalNorm: globalNorm,
         scale: configQuestion.scale
     }
+}
+
+function getNorm(norms: types.RawDatum, questionId:string):number {
+    if (!_.has(norms, questionId)) throw new Error("We might be missing data; can't get norm for "+questionId)
+    return norms[questionId]
 }
 
 function dataPoints(data:types.RawDatum[], questionId:string):number[] {

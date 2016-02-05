@@ -38,18 +38,27 @@
                 width: 100%;
             }
 
-            .page-margins { /*padding: 72px;*/ }
+            .page-margins { padding: 18px; }
             .inline-block { display:inline-block; }
 
 
             .relative { position:relative; }
 
             /* TEXT */
-            .headline-text { font-size: 24px; }
+
+
+            /*.headline-text { font-size: 24px; }
             .headline-text-small { font-size:18px; }
             .large-text { font-size: 14px; }
             .medium-text { font-size: 12px; }
             .small-text { font-size: 10px; }
+*/
+            .headline-text { font-size: 18px; }
+            .headline-text-small { font-size:14px; }
+            .large-text { font-size: 10px; }
+            .medium-text { font-size: 8px; }
+            .small-text { font-size: 6px; }
+
 
             .bold-text { font-weight: bold; }
 
@@ -63,8 +72,12 @@
 
             /* REPORT HEADER */
             .report-header {}
-            .report-header-title {}
-            .report-header-description {}
+            .report-header-title {
+                border-bottom: 1px solid #d2d2d2; /*grey*/
+            }
+            .report-header-description {
+                margin: 10px 0;
+            }
 
             /* REPORT KEY */
             .report-key {}
@@ -140,7 +153,7 @@
 
             .question-cell-width {}
             .datum-cell-width {
-                width: 36px;
+                width: 30px;
             }
             .bar-chart-cell-width {
                 width: 150px;
@@ -154,8 +167,8 @@
             }
 
             .rotated-label {
-                width:50px;
-                padding-right:3px;
+                width:36px;
+                padding-right:2px;
                 /* Safari */
                 -webkit-transform: rotate(90deg);
                 /* Firefox */
@@ -273,10 +286,10 @@
     <body class="page-margins">
         <header class="report-header no-page-break stretch-width">
             <div class="headline-text bold-text report-header-title">
-                {{report.header}}
-            </title>
+                {{htmlFriendly(report.header)}}
+            </div>
             <div class="large-text report-header-description">
-                {{report.description}}
+                {{htmlFriendly(report.description)}}
             </div>
         </header>
 
@@ -295,7 +308,7 @@
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
-                        <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{section.header.description}}</td>
+                        <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{htmlFriendly(section.header.description)}}</td>
                         <td class="large-text bold-text results-table-cell section-org-score large-row-height">
                             <div>
                                 <div class="inline-block section-org-score-label medium-text">ORGANIZATION<br>SCORE</div>
@@ -320,9 +333,9 @@
             <table class="results-table stretch-width center-text">
                 <tr>
                     <td class="results-table-cell-no-right-border large-row-height"></td>
-                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Org Score</div></td>
-                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Industry Norm</div></td>
-                    <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Global Norm</div></td>
+                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
+                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
+                    <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
                     <td class="results-table-cell large-row-height bar-chart-cell-width relative">
                         <div class="bar-chart-box-hack">
                         {% for tick in tickMarks(section.scale) %}
@@ -335,7 +348,7 @@
                     </td>
                 </tr>
                 <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
-                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{section.header.description}}</td>
+                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(section.header.description)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.orgScore.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.industryNorm.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.globalNorm.toFixed(2)}}</td>
@@ -343,7 +356,7 @@
                 </tr>
                 {% for question in section.questions %}
                 <tr class="results-table-row medium-text">
-                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{question.description}}</td>
+                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>

@@ -13,6 +13,7 @@ interface TemplateData {
     report: types.Report;
     tickMarks: Function;
     tickMarkLabels: Function;
+    htmlFriendly: Function;
 }
 
 interface TickMark {
@@ -25,7 +26,8 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
     var options = {
         report: data,
         tickMarks: tickMarks,
-        tickMarkLabels: tickMarkLabels
+        tickMarkLabels: tickMarkLabels,
+        htmlFriendly: htmlFriendly
     }
     return renderFile(templatePath, options)
     .then((renderedHtml:string) => {
@@ -59,4 +61,8 @@ function tickMarks(scale: number, interval: number = 1): TickMark[] {
             percentOfScale: 100 * mark / scale
         }
     })
+}
+
+function htmlFriendly(str:string):string {
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/’/g, "&#39;");
 }
