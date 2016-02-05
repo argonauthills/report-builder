@@ -1,10 +1,9 @@
 <html>
     <head>
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
         <style>
             /* RESET */
             html {
-                font-size: 8pt;
                 font-family: 'Open Sans', sans-serif;
                 color: #231f20;  /*black*/
                 /* apply a natural box layout model to all elements, but allowing components to change */
@@ -34,6 +33,17 @@
             .page-margins {
                 /*padding: 72px;*/
             }
+
+            /* TEXT */
+            .headline-text { font-size: 24px; }
+            .headline-text-small { font-size:18px; }
+            .large-text { font-size: 14px; }
+            .medium-text { font-size: 12px; }
+            .small-text { font-size: 10px; }
+
+            .bold-text { font-weight: bold; }
+
+
 
             /* REPORT HEADER */
             .report-header {}
@@ -126,10 +136,10 @@
     </head>
     <body class="page-margins">
         <header class="report-header no-page-break stretch-width">
-            <div class="report-header-title">
+            <div class="headline-text bold-text report-header-title">
                 {{header}}
             </title>
-            <div class="report-header-description">
+            <div class="large-text report-header-description">
                 {{description}}
             </div>
         </header>
@@ -139,8 +149,8 @@
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
-                        <td class="results-table-cell question-cell-width normal-row-height">{{section.header.description}}</td>
-                        <td class="results-table-cell datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
+                        <td class="headline-text-small bold-text results-table-cell question-cell-width normal-row-height">{{section.header.description}}</td>
+                        <td class="large-text bold-text results-table-cell datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
                         <!-- <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
                         <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
                         <td class="results-table-cell bar-chart-cell-width normal-row-height">
@@ -155,7 +165,7 @@
                 </table>
             </header>
             <table class="results-table stretch-width">
-                <tr class="results-table-row results-table-labels-row">
+                <tr class="results-table-row results-table-labels-row large-text bold-text">
                     <th class="results-table-cell question-cell-width large-row-height">{{section.header.description}}</th>
                     <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore}}</th>
                     <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm}}</th>
@@ -163,8 +173,8 @@
                     <th class="results-table-cell bar-chart-cell-width large-row-height"></th>
                 </tr>
                 {% for question in section.questions %}
-                <tr class="results-table-row">
-                    <td class="results-table-cell question-cell-width normal-row-height">{{question.description}}</td>
+                <tr class="results-table-row medium-text">
+                    <td class="results-table-cell question-cell-width normal-row-height small-text">{{question.description}}</td>
                     <td class="results-table-cell datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
                     <td class="results-table-cell datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
                     <td class="results-table-cell datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
