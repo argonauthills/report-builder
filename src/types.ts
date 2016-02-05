@@ -1,10 +1,14 @@
 export interface Report {
-    header: string;
-    description: string;
     sections: ReportSection[];
 }
 
 export interface ReportSection {
+    header: string;
+    description: string;
+    subsections: ReportSubsection[]
+}
+
+export interface ReportSubsection {
     header: ReportQuestion;
     questions: ReportQuestion[];
     orgScore: number;
@@ -25,12 +29,16 @@ export interface ReportQuestion {
 
 
 export interface ReportConfig {
-    header: string;
-    description: string;
     sections: ReportConfigSection[];
 }
 
 export interface ReportConfigSection {
+    header: string;
+    description: string;
+    subsections: ReportConfigSubsection[];
+}
+
+export interface ReportConfigSubsection {
     header: string;
     questions: ReportConfigQuestion[];
 }

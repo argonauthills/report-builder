@@ -23,8 +23,8 @@
 
             /* UTILITIES */
             .no-page-break {
-                 page-break-inside: avoid;
-                 /*phantomjs doesn't respect this; we're using this and the pseudo-selector hack instead */
+                page-break-inside: avoid;
+                /*phantomjs doesn't respect this; we're using this and the pseudo-selector hack instead */
                 display:inline-block;
             }
             .no-page-break:after {
@@ -32,6 +32,13 @@
                 display:block;
                 height:0px;
                 visibility: hidden;
+            }
+
+            .page-break-after {
+                page-break-after: always;
+            }
+            .page-break-after:last-child {
+                page-break-before: auto;
             }
 
             .stretch-width {
@@ -284,109 +291,113 @@
         </style>
     </head>
     <body class="page-margins">
-        <header class="report-header no-page-break stretch-width">
-            <div class="headline-text bold-text report-header-title">
-                {{htmlFriendly(report.header)}}
-            </div>
-            <div class="large-text report-header-description">
-                {{htmlFriendly(report.description)}}
-            </div>
-        </header>
+        {% for section in report.sections%}
+        <article class="report page-break-after">
+            <header class="report-header no-page-break stretch-width">
+                <div class="headline-text bold-text report-header-title">
+                    {{htmlFriendly(report.header)}}
+                </div>
+                <div class="large-text report-header-description">
+                    {{htmlFriendly(report.description)}}
+                </div>
+            </header>
 
-        {% for section in report.sections %}
-        <section class="report-section no-page-break stretch-width">
-            <section class="report-key">
-                <div class="report-key-line">
-                    <span class="medium-text align-middle">Industry Norm</span>
-                    <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-1"></div></span>
-                </div>
-                <div class="report-key-line">
-                    <span class="medium-text align-middle">Global Norm</span>
-                    <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-2"><div class="bar-chart-symbol-2-inner"></div></div></span>
-                </div>
-            </section>
-            <header class="report-section-header stretch-width">
-                <table class="results-table stretch-width">
-                    <tr class="results-table-row">
-                        <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{htmlFriendly(section.header.description)}}</td>
-                        <td class="large-text bold-text results-table-cell section-org-score large-row-height">
-                            <div>
-                                <div class="inline-block section-org-score-label medium-text">ORGANIZATION<br>SCORE</div>
-                                <div class="inline-block section-org-score-value center-text">{{section.header.orgScore.toFixed(2)}}</div>
+            {% for subsection in report.subsections %}
+            <section class="report-section no-page-break stretch-width">
+                <section class="report-key">
+                    <div class="report-key-line">
+                        <span class="medium-text align-middle">Industry Norm</span>
+                        <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-1"></div></span>
+                    </div>
+                    <div class="report-key-line">
+                        <span class="medium-text align-middle">Global Norm</span>
+                        <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-2"><div class="bar-chart-symbol-2-inner"></div></div></span>
+                    </div>
+                </section>
+                <header class="report-section-header stretch-width">
+                    <table class="results-table stretch-width">
+                        <tr class="results-table-row">
+                            <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{htmlFriendly(subsection.header.description)}}</td>
+                            <td class="large-text bold-text results-table-cell section-org-score large-row-height">
+                                <div>
+                                    <div class="inline-block section-org-score-label medium-text">ORGANIZATION<br>SCORE</div>
+                                    <div class="inline-block section-org-score-value center-text">{{subsection.header.orgScore.toFixed(2)}}</div>
+                                </div>
+                            </td>
+                            <td class="results-table-cell bar-chart-cell-width large-row-height relative">
+                                <div class="bar-chart-box">
+                                    <div class="bar-chart bar-chart-large">
+                                        <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
+                                        <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
+                                        <div class="bar-chart-symbol-2" style="left:{{100 * section.header.globalNorm / section.header.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
+                                    </div>
+                                    {% for tick in tickMarks(section.scale) %}
+                                        <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                                    {% endfor %}
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </header>
+                <table class="results-table stretch-width center-text">
+                    <tr>
+                        <td class="results-table-cell-no-right-border large-row-height"></td>
+                        <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
+                        <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
+                        <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
+                        <td class="results-table-cell large-row-height bar-chart-cell-width relative">
+                            <div class="bar-chart-box-hack">
+                            {% for tick in tickMarks(section.scale) %}
+                                <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                            {% endfor %}
+                            {% for tick in tickMarkLabels(section.scale) %}
+                                <div class="bar-chart-division-label-white-bordered medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
+                            {% endfor %}
                             </div>
                         </td>
-                        <td class="results-table-cell bar-chart-cell-width large-row-height relative">
+                    </tr>
+                    <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
+                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(section.header.description)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.orgScore.toFixed(2)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.industryNorm.toFixed(2)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.globalNorm.toFixed(2)}}</td>
+                        <td class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></td>
+                    </tr>
+                    {% for question in section.questions %}
+                    <tr class="results-table-row medium-text">
+                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
+                        <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
+                        <td class="results-table-cell bar-chart-cell-width normal-row-height relative">
                             <div class="bar-chart-box">
-                                <div class="bar-chart bar-chart-large">
-                                    <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
-                                    <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
-                                    <div class="bar-chart-symbol-2" style="left:{{100 * section.header.globalNorm / section.header.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
+                                <div class="bar-chart">
+                                    <div class="bar-chart-bar" style="width:{{100 * question.orgScore / question.scale}}%;"></div>
+                                    <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / question.scale}}%"></div>
+                                    <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / question.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
                                 </div>
-                                {% for tick in tickMarks(section.scale) %}
-                                    <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                                {% for tick in tickMarks(question.scale) %}
+                                    <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
                                 {% endfor %}
                             </div>
                         </td>
                     </tr>
-                </table>
-            </header>
-            <table class="results-table stretch-width center-text">
-                <tr>
-                    <td class="results-table-cell-no-right-border large-row-height"></td>
-                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
-                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
-                    <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
-                    <td class="results-table-cell large-row-height bar-chart-cell-width relative">
-                        <div class="bar-chart-box-hack">
-                        {% for tick in tickMarks(section.scale) %}
-                            <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
-                        {% endfor %}
-                        {% for tick in tickMarkLabels(section.scale) %}
-                            <div class="bar-chart-division-label-white-bordered medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
-                        {% endfor %}
-                        </div>
-                    </td>
-                </tr>
-                <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
-                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(section.header.description)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.orgScore.toFixed(2)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.industryNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.globalNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></td>
-                </tr>
-                {% for question in section.questions %}
-                <tr class="results-table-row medium-text">
-                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell bar-chart-cell-width normal-row-height relative">
-                        <div class="bar-chart-box">
-                            <div class="bar-chart">
-                                <div class="bar-chart-bar" style="width:{{100 * question.orgScore / question.scale}}%;"></div>
-                                <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / question.scale}}%"></div>
-                                <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / question.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
-                            </div>
-                            {% for tick in tickMarks(question.scale) %}
-                                <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
+                    {% endfor %}
+                    <tr class="results-table-bottom-labels-row">
+                        <td ></td>
+                        <td ></td>
+                        <td ></td>
+                        <td ></td>
+                        <td class="bar-chart-cell-width" style="position:relative;">
+                            {% for tick in tickMarkLabels(section.scale) %}
+                                <label class="bar-chart-division-label medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
                             {% endfor %}
-                        </div>
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr class="results-table-bottom-labels-row">
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td ></td>
-                    <td class="bar-chart-cell-width" style="position:relative;">
-                        {% for tick in tickMarkLabels(section.scale) %}
-                            <label class="bar-chart-division-label medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
-                        {% endfor %}
-                    </td>
-                </tr>
-            </table>
-        </section>
+                        </td>
+                    </tr>
+                </table>
+            </section>
+            {% endfor %}
+        </article>
         {% endfor %}
     </body>
 </html>

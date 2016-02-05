@@ -7,18 +7,26 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, gl
     })
 
     return {
-        header: config.header,
-        description: config.description,
         sections: transformedSections
     }
 }
 
+function transformSection(data: types.RawDatum[], configSection: types.ReportConfigSection, globalNorms: types.RawDatum, industryNorms: types.RawDatum): types.ReportSection {
+    var subsections = configSection.subsections.map((configSubsection) => {
+        return transformSubsection(data, configSubsection, globalNorms, industryNorms)
+    })
+    return {
+        header: configSection.header,
+        description: configSection.description,
+        subsections: subsections
+    }
+}
 
-function transformSection(data:types.RawDatum[], configSection:types.ReportConfigSection, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.ReportSection {
-    var questions = configSection.questions.map((configQuestion)=>{
+function transformSubsection(data:types.RawDatum[], configSubsection:types.ReportConfigSubsection, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.ReportSubsection {
+    var questions = configSubsection.questions.map((configQuestion)=>{
         return transformQuestion(data, configQuestion, globalNorms, industryNorms)
     })
-    var header = sectionHeader(questions, configSection)
+    var header = sectionHeader(questions, configSubsection)
     var scale = _.first(questions).scale  // we get the section scale from the first question (they should all match anyway)
     if (!scale) throw new Error("Cannot determine scale for section " + header.description)
     return {
@@ -31,7 +39,7 @@ function transformSection(data:types.RawDatum[], configSection:types.ReportConfi
     }
 }
 
-function sectionHeader(questions:types.ReportQuestion[], configSection:types.ReportConfigSection):types.ReportQuestion {
+function sectionHeader(questions:types.ReportQuestion[], configSection:types.ReportConfigSubsection):types.ReportQuestion {
     return {
         description: configSection.header,
         orgScore: mean(_.map<types.ReportQuestion, number>(questions, 'orgScore')),
