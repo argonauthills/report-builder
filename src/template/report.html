@@ -38,9 +38,11 @@
                 width: 100%;
             }
 
-            .page-margins {
-                /*padding: 72px;*/
-            }
+            .page-margins { /*padding: 72px;*/ }
+            .inline-block { display:inline-block; }
+
+
+            .relative { position:relative; }
 
             /* TEXT */
             .headline-text { font-size: 24px; }
@@ -53,6 +55,9 @@
 
             .center-text { text-align: center; }
             .left-text { text-align: left; }
+            .right-text { text-align: right; }
+
+            .align-middle { vertical-align: middle; }
 
 
 
@@ -80,6 +85,26 @@
             /* REPORT SECTION */
             .report-section {}
             .report-section-header {}
+            .section-org-score {
+                width: 170px;
+                padding:10px 0;
+                white-space:nowrap;
+                text-align: center;
+            }
+            .section-org-score-label {
+                border-right: 1px solid #d2d2d2; /*grey*/
+                padding:0 10px;
+                display:table-cell;
+                text-align:left;
+                vertical-align:middle;
+            }
+            .section-org-score-value {
+                width: 80px;
+                padding:5px;
+                display:table-cell;
+                vertical-align:middle;
+                text-align: center;
+            }
 
             /* RESULTS */
             .results-table {
@@ -105,6 +130,10 @@
 
             .results-table-cell {
                 border-right: solid 1px #231f20;  /*black*/
+                overflow-x:visible;
+            }
+            .results-table-cell-no-right-border {
+                border-right: solid 1px transparent;
             }
 
             .results-table-cell-padding { padding:3px; }
@@ -124,13 +153,37 @@
                 height: 50px;
             }
 
+            .rotated-label {
+                width:50px;
+                padding-right:3px;
+                /* Safari */
+                -webkit-transform: rotate(90deg);
+                /* Firefox */
+                -moz-transform: rotate(90deg);
+                /* IE */
+                -ms-transform: rotate(90deg);
+                /* Opera */
+                -o-transform: rotate(90deg);
+            }
+
 
             /* BAR CHART */
             .bar-chart-box {
-                height:100%;
-                width:100%;
-                position: relative;
+                top:0;
+                right:0;
+                bottom:0;
+                left:0;
+                position: absolute;
                 min-height: 10px;
+                overflow-y:hidden;
+                overflow-x:visible;
+            }
+
+            .bar-chart-box-hack {
+                /* We were having trouble with overflow... so here's a hack to make it work for the labels*/
+                width:100%;
+                height:100%;
+                position:relative;
             }
             .bar-chart {
                 position: absolute;
@@ -140,9 +193,13 @@
                 margin-top:-5px;
                 top: 50%;
             }
+            .bar-chart-large {
+                height:26px;
+                margin-top:-13px;
+            }
+
             .bar-chart-bar {
                 position:absolute;
-                height:10px;
                 left:0;
                 top:0;
                 bottom:0;
@@ -189,10 +246,26 @@
                 border-left: 1px solid #d2d2d2; /*grey*/
                 height:100%;
             }
+
+            .bar-chart-division-dotted {
+                border-left: 1px dotted #231f20;  /*black*/
+            }
+
             .bar-chart-division-label {
                 position:absolute;
                 top:0;
                 left:-3px;
+            }
+
+            .bar-chart-division-label-white-bordered {
+                position:absolute;
+                width:20px;
+                margin-left:-10px;
+                height:16px;
+                margin-top:-8px;
+                background-color: white;
+                top:50%;
+                display:table;
             }
 
         </style>
@@ -211,41 +284,62 @@
         <section class="report-section no-page-break stretch-width">
             <section class="report-key">
                 <div class="report-key-line">
-                    <span class="medium-text">Industry Norm</span>
-                    <span class="report-key-symbol-box"><div class="report-key-symbol bar-chart-symbol-1"></div></span>
+                    <span class="medium-text align-middle">Industry Norm</span>
+                    <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-1"></div></span>
                 </div>
                 <div class="report-key-line">
-                    <span class="medium-text">Global Norm</span>
-                    <span class="report-key-symbol-box"><div class="report-key-symbol bar-chart-symbol-2"><div class="bar-chart-symbol-2-inner"></div></div></span>
+                    <span class="medium-text align-middle">Global Norm</span>
+                    <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-2"><div class="bar-chart-symbol-2-inner"></div></div></span>
                 </div>
             </section>
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
                         <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{section.header.description}}</td>
-                        <td class="large-text bold-text results-table-cell datum-cell-width large-row-height">{{section.header.orgScore.toFixed(2)}}</td>
-                        <!-- <td class="datum-cell-width large-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
-                        <td class="datum-cell-width large-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
-                        <td class="results-table-cell bar-chart-cell-width large-row-height">
+                        <td class="large-text bold-text results-table-cell section-org-score large-row-height">
+                            <div>
+                                <div class="inline-block section-org-score-label medium-text">ORGANIZATION<br>SCORE</div>
+                                <div class="inline-block section-org-score-value center-text">{{section.header.orgScore.toFixed(2)}}</div>
+                            </div>
+                        </td>
+                        <td class="results-table-cell bar-chart-cell-width large-row-height relative">
                             <div class="bar-chart-box">
-                                <div class="bar-chart">
+                                <div class="bar-chart bar-chart-large">
                                     <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
                                     <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
                                     <div class="bar-chart-symbol-2" style="left:{{100 * section.header.globalNorm / section.header.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
-                                    <div class="bar-chart-division"></div>
                                 </div>
+                                {% for tick in tickMarks(section.scale) %}
+                                    <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                                {% endfor %}
                             </div>
                         </td>
                     </tr>
                 </table>
             </header>
             <table class="results-table stretch-width center-text">
+                <tr>
+                    <td class="results-table-cell-no-right-border large-row-height"></td>
+                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Org Score</div></td>
+                    <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Industry Norm</div></td>
+                    <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label right-text label-width">Global Norm</div></td>
+                    <td class="results-table-cell large-row-height bar-chart-cell-width relative">
+                        <div class="bar-chart-box-hack">
+                        {% for tick in tickMarks(section.scale) %}
+                            <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                        {% endfor %}
+                        {% for tick in tickMarkLabels(section.scale) %}
+                            <div class="bar-chart-division-label-white-bordered" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
+                        {% endfor %}
+                        </div>
+                    </td>
+                </tr>
                 <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
-                    <th class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{section.header.description}}</th>
-                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.orgScore.toFixed(2)}}</th>
-                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.industryNorm.toFixed(2)}}</th>
-                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.globalNorm.toFixed(2)}}</th>
-                    <th class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></th>
+                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{section.header.description}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.orgScore.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.industryNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.globalNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></td>
                 </tr>
                 {% for question in section.questions %}
                 <tr class="results-table-row medium-text">
@@ -253,7 +347,7 @@
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
                     <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell bar-chart-cell-width normal-row-height">
+                    <td class="results-table-cell bar-chart-cell-width normal-row-height relative">
                         <div class="bar-chart-box">
                             <div class="bar-chart">
                                 <div class="bar-chart-bar" style="width:{{100 * question.orgScore / question.scale}}%;"></div>
