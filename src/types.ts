@@ -9,12 +9,13 @@ export interface ReportSection {
 }
 
 export interface ReportSubsection {
-    header: ReportQuestion;
+    description: string;
     questions: ReportQuestion[];
     orgScore: number;
     industryNorm: number;
     globalNorm: number;
     scale: number;
+    scaleInterval: number;
 }
 
 export interface ReportQuestion {
@@ -22,7 +23,6 @@ export interface ReportQuestion {
     orgScore: number;
     industryNorm: number;
     globalNorm: number;
-    scale: number;
 }
 
 
@@ -41,12 +41,13 @@ export interface ReportConfigSection {
 export interface ReportConfigSubsection {
     header: string;
     questions: ReportConfigQuestion[];
+    scale: number;
+    scaleInterval: number;
 }
 
 export interface ReportConfigQuestion {
     description: string;
     id: string;
-    scale: number;
 }
 
 export interface RawDatum {

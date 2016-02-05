@@ -26,26 +26,14 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
     var questions = configSubsection.questions.map((configQuestion)=>{
         return transformQuestion(data, configQuestion, globalNorms, industryNorms)
     })
-    var header = sectionHeader(questions, configSubsection)
-    var scale = _.first(questions).scale  // we get the section scale from the first question (they should all match anyway)
-    if (!scale) throw new Error("Cannot determine scale for section " + header.description)
     return {
-        header: header,
+        description: configSubsection.header,
         questions: questions,
         orgScore: mean(questions.map((q) => q.orgScore)),
         industryNorm: mean(questions.map((q)=>q.industryNorm)),
         globalNorm: mean(questions.map((q)=>q.globalNorm)),
-        scale: scale
-    }
-}
-
-function sectionHeader(questions:types.ReportQuestion[], configSection:types.ReportConfigSubsection):types.ReportQuestion {
-    return {
-        description: configSection.header,
-        orgScore: mean(_.map<types.ReportQuestion, number>(questions, 'orgScore')),
-        industryNorm: mean(_.map<types.ReportQuestion, number>(questions, 'industryNorm')),
-        globalNorm: mean(_.map<types.ReportQuestion, number>(questions, 'globalNorm')),
-        scale: _.first<number>(_.map<types.ReportQuestion, number>(questions, 'scale')) || 1
+        scale: configSubsection.scale || 1,
+        scaleInterval: configSubsection.scaleInterval || 1
     }
 }
 
@@ -58,7 +46,6 @@ function transformQuestion(data:types.RawDatum[], configQuestion:types.ReportCon
         orgScore: mean(points),
         industryNorm: industryNorm,
         globalNorm: globalNorm,
-        scale: configQuestion.scale
     }
 }
 
