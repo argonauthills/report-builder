@@ -12,7 +12,7 @@ Install
 Run
 ---
 
-    npm start /path/to/config.json /path/to/data.csv /path/to/destination.pdf
+    node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf
 
 Develop
 -------

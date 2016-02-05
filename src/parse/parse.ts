@@ -1,15 +1,7 @@
 import Promise = require('bluebird')
 import types = require('../types')
 var fs = require('fs')
-// var babyParse = require('babyparse')
 var readFile = Promise.promisify<string, string, string>(fs.readFile)
-
-// export function fromCsv(pathToCsv:string):Promise<types.RawData> {
-//     return readFile(pathToCsv)
-//     .then((csv:string) => {
-//         return babyParse.parse(csv)
-//     })
-// }
 
 var Converter = require("csvtojson").Converter;
 var converter = new Converter({ignoreEmpty:true});
