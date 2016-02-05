@@ -17,6 +17,10 @@
                 padding:0;
             }
 
+            table {
+                /*table-layout: fixed;*/
+            }
+
             /* UTILITIES */
             .no-page-break {
                  page-break-inside: avoid;
@@ -48,6 +52,7 @@
             .bold-text { font-weight: bold; }
 
             .center-text { text-align: center; }
+            .left-text { text-align: left; }
 
 
 
@@ -82,7 +87,9 @@
                 width:100%;
                 border-collapse: collapse;
             }
-            .results-table-header {}
+            .results-table-header-height {
+                height: 50px;
+            }
             .results-table-labels-row {
                 border-left: solid 1px #231f20;  /*black*/
                 background-color: #d2d2d2; /*grey*/
@@ -95,23 +102,26 @@
                 border-bottom: solid 1px #231f20;  /*black*/
             }
 
+
             .results-table-cell {
                 border-right: solid 1px #231f20;  /*black*/
             }
 
+            .results-table-cell-padding { padding:3px; }
+
             .question-cell-width {}
             .datum-cell-width {
-                width: 100px;
+                width: 36px;
             }
             .bar-chart-cell-width {
-                width: 300px;
+                width: 150px;
             }
 
             .normal-row-height {
-                height: 40px;
+                min-height: 25px;
             }
             .large-row-height {
-                height: 60px;
+                height: 50px;
             }
 
 
@@ -212,11 +222,11 @@
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
-                        <td class="headline-text-small bold-text results-table-cell question-cell-width normal-row-height">{{section.header.description}}</td>
-                        <td class="large-text bold-text results-table-cell datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
-                        <!-- <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
-                        <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
-                        <td class="results-table-cell bar-chart-cell-width normal-row-height">
+                        <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{section.header.description}}</td>
+                        <td class="large-text bold-text results-table-cell datum-cell-width large-row-height">{{section.header.orgScore.toFixed(2)}}</td>
+                        <!-- <td class="datum-cell-width large-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
+                        <td class="datum-cell-width large-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
+                        <td class="results-table-cell bar-chart-cell-width large-row-height">
                             <div class="bar-chart-box">
                                 <div class="bar-chart">
                                     <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
@@ -230,19 +240,19 @@
                 </table>
             </header>
             <table class="results-table stretch-width center-text">
-                <tr class="results-table-row results-table-labels-row large-text bold-text">
-                    <th class="results-table-cell question-cell-width large-row-height">{{section.header.description}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore.toFixed(2)}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm.toFixed(2)}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.globalNorm.toFixed(2)}}</th>
-                    <th class="results-table-cell bar-chart-cell-width large-row-height"></th>
+                <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
+                    <th class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{section.header.description}}</th>
+                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.orgScore.toFixed(2)}}</th>
+                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.industryNorm.toFixed(2)}}</th>
+                    <th class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{section.globalNorm.toFixed(2)}}</th>
+                    <th class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></th>
                 </tr>
                 {% for question in section.questions %}
                 <tr class="results-table-row medium-text">
-                    <td class="results-table-cell question-cell-width normal-row-height small-text">{{question.description}}</td>
-                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
-                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
-                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{question.description}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
                     <td class="results-table-cell bar-chart-cell-width normal-row-height">
                         <div class="bar-chart-box">
                             <div class="bar-chart">
