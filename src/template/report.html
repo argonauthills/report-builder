@@ -217,11 +217,13 @@
                         <!-- <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
                         <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
                         <td class="results-table-cell bar-chart-cell-width normal-row-height">
-                            <div class="bar-chart">
-                                <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
-                                <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
-                                <div class="bar-chart-symbol-2" style="left:{{100 * section.header.globalNorm / section.header.scale}}%"></div>
-                                <div class="bar-chart-division"></div>
+                            <div class="bar-chart-box">
+                                <div class="bar-chart">
+                                    <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
+                                    <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
+                                    <div class="bar-chart-symbol-2" style="left:{{100 * section.header.globalNorm / section.header.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
+                                    <div class="bar-chart-division"></div>
+                                </div>
                             </div>
                         </td>
                     </tr>
