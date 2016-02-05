@@ -13,7 +13,8 @@
 
             /* UTILITIES */
             .no-page-break {
-                /* page-break-inside: avoid;  phantomjs doesn't respect this; we're using this and the pseudo-selector hack instead */
+                 page-break-inside: avoid;
+                 /*phantomjs doesn't respect this; we're using this and the pseudo-selector hack instead */
                 display:inline-block;
             }
             .no-page-break:after {
@@ -57,10 +58,10 @@
             }
 
             .normal-row-height {
-                height: 50px;
+                height: 40px;
             }
             .large-row-height {
-                height: 100px;
+                height: 60px;
             }
 
 
@@ -73,14 +74,14 @@
             .bar-chart-bar {
                 position:absolute;
                 left:0;
-                top:10;
-                bottom:10;
+                top:5;
+                bottom:5;
                 background-color: blue;
             }
             .bar-chart-symbol-1 {
                 position:absolute;
-                top:10;
-                bottom:10;
+                top:5;
+                bottom:5;
                 width:20px;
                 margin-left:-10px;
                 background-color: black;
@@ -90,13 +91,13 @@
             .bar-chart-symbol-2 {
                 position:absolute;
                 top:50%;
-                width:20px;
-                height:20px;
-                margin-top:-10px;
-                margin-left:-10px;
+                width:10px;
+                height:10px;
+                margin-top:-5px;
+                margin-left:-5px;
                 background-color: red;
                 border: 1px solid white;
-                border-radius:10px;
+                border-radius:5px;
             }
             .bar-chart-division {
                 position:absolute;
@@ -123,10 +124,10 @@
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
-                        <td class="question-cell-width normal-row-height">{{section.header.question}}</td>
+                        <td class="question-cell-width normal-row-height">{{section.header.description}}</td>
                         <td class="datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
-                        <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
-                        <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td>
+                        <!-- <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
+                        <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
                         <td class="bar-chart-cell-width normal-row-height">
                             <div class="bar-chart">
                                 <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
@@ -146,7 +147,7 @@
                 </tr>
                 {% for question in section.questions %}
                 <tr class="results-table-row">
-                    <td class="question-cell-width normal-row-height">{{question.question}}</td>
+                    <td class="question-cell-width normal-row-height">{{question.description}}</td>
                     <td class="datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
                     <td class="datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
                     <td class="datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
