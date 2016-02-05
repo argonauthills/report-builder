@@ -19,9 +19,15 @@ function transformSection(data:types.RawDatum[], configSection:types.ReportConfi
         return transformQuestion(data, configQuestion)
     })
     var header = sectionHeader(questions, configSection)
+    var scale = _.first(questions).scale  // we get the section scale from the first question (they should all match anyway)
+    if (!scale) throw new Error("Cannot determine scale for section " + header.description)
     return {
         header: header,
-        questions: questions
+        questions: questions,
+        orgScore: mean(questions.map((q) => q.orgScore)),
+        industryNorm: mean(questions.map((q)=>q.industryNorm)),
+        globalNorm: mean(questions.map((q)=>q.globalNorm)),
+        scale: scale
     }
 }
 

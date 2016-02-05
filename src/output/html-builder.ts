@@ -2,15 +2,31 @@ import Promise = require('bluebird')
 import swig = require('swig')
 import id = require('../lib/id')
 import types = require('../types')
+import _ = require('lodash')
 var path = require('path')
 var fs = require('fs')
 
 var renderFile = Promise.promisify<any, string, swig.SwigOptions>(swig.renderFile)
 var writeFile = Promise.promisify<any, string, string>(fs.writeFile)
 
+interface TemplateData {
+    report: types.Report;
+    tickMarks: Function;
+    tickMarkLabels: Function;
+}
+
+interface TickMark {
+    label: string;
+    percentOfScale: number;
+}
+
 export function generateHtml(data:types.Report, templatePath:string, tempDir:string):Promise<string> {
     var tempPath = randomHtmlName(tempDir)
-    var options = data
+    var options = {
+        report: data,
+        tickMarks: tickMarks,
+        tickMarkLabels: tickMarkLabels
+    }
     return renderFile(templatePath, options)
     .then((renderedHtml:string) => {
         return writeFile(tempPath, renderedHtml)
@@ -24,4 +40,23 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
 
 export function randomHtmlName(dir:string):string {
     return path.join(dir, id.generate(10)+'.html')
+}
+
+
+function tickMarkLabels(scale:number, interval:number=1):TickMark[] {
+    return _.range(0, scale+1 /* we want the endpoints too */, interval).map(function(mark:number) {
+        return {
+            label: mark.toString(),
+            percentOfScale: 100 * mark / scale
+        }
+    })
+}
+
+function tickMarks(scale: number, interval: number = 1): TickMark[] {
+    return _.range(1, scale /*we don't want tickMarks at endpoints*/, interval).map(function(mark: number) {
+        return {
+            label: mark.toString(),
+            percentOfScale: 100 * mark / scale
+        }
+    })
 }

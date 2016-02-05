@@ -7,6 +7,10 @@ export interface Report {
 export interface ReportSection {
     header: ReportQuestion;
     questions: ReportQuestion[];
+    orgScore: number;
+    industryNorm: number;
+    globalNorm: number;
+    scale: number;
 }
 
 export interface ReportQuestion {

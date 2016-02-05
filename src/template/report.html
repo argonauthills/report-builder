@@ -13,6 +13,10 @@
                 box-sizing: inherit;
             }
 
+            td {
+                padding:0;
+            }
+
             /* UTILITIES */
             .no-page-break {
                  page-break-inside: avoid;
@@ -42,6 +46,8 @@
             .small-text { font-size: 10px; }
 
             .bold-text { font-weight: bold; }
+
+            .center-text { text-align: center; }
 
 
 
@@ -80,6 +86,9 @@
             .results-table-labels-row {
                 border-left: solid 1px #231f20;  /*black*/
                 background-color: #d2d2d2; /*grey*/
+            }
+            .results-table-bottom-labels-row {
+                height:30px;
             }
             .results-table-row {
                 border-top: solid 1px #231f20;  /*black*/
@@ -160,27 +169,35 @@
                 background-color: #c60c0b; /*red*/
             }
 
+            /* TICK MARKS */
+
             .bar-chart-division {
                 position:absolute;
                 top:0;
                 bottom:0;
                 margin-left:-1px;
-                border: 1px solid gray;
+                border-left: 1px solid #d2d2d2; /*grey*/
                 height:100%;
             }
+            .bar-chart-division-label {
+                position:absolute;
+                top:0;
+                left:-3px;
+            }
+
         </style>
     </head>
     <body class="page-margins">
         <header class="report-header no-page-break stretch-width">
             <div class="headline-text bold-text report-header-title">
-                {{header}}
+                {{report.header}}
             </title>
             <div class="large-text report-header-description">
-                {{description}}
+                {{report.description}}
             </div>
         </header>
 
-        {% for section in sections %}
+        {% for section in report.sections %}
         <section class="report-section no-page-break stretch-width">
             <section class="report-key">
                 <div class="report-key-line">
@@ -210,12 +227,12 @@
                     </tr>
                 </table>
             </header>
-            <table class="results-table stretch-width">
+            <table class="results-table stretch-width center-text">
                 <tr class="results-table-row results-table-labels-row large-text bold-text">
                     <th class="results-table-cell question-cell-width large-row-height">{{section.header.description}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm}}</th>
-                    <th class="results-table-cell datum-cell-width large-row-height">{{section.globalNorm}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore.toFixed(2)}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm.toFixed(2)}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.globalNorm.toFixed(2)}}</th>
                     <th class="results-table-cell bar-chart-cell-width large-row-height"></th>
                 </tr>
                 {% for question in section.questions %}
@@ -230,12 +247,25 @@
                                 <div class="bar-chart-bar" style="width:{{100 * question.orgScore / question.scale}}%;"></div>
                                 <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / question.scale}}%"></div>
                                 <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / question.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
-                                <div class="bar-chart-division"></div>
                             </div>
+                            {% for tick in tickMarks(question.scale) %}
+                                <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
+                            {% endfor %}
                         </div>
                     </td>
                 </tr>
                 {% endfor %}
+                <tr class="results-table-bottom-labels-row">
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td ></td>
+                    <td class="bar-chart-cell-width" style="position:relative;">
+                        {% for tick in tickMarkLabels(section.scale) %}
+                            <label class="bar-chart-division-label" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
+                        {% endfor %}
+                    </td>
+                </tr>
             </table>
         </section>
         {% endfor %}
