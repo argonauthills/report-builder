@@ -13,7 +13,6 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
     var options = data
     return renderFile(templatePath, options)
     .then((renderedHtml:string) => {
-        console.log("renderedHtml", renderedHtml)
         return writeFile(tempPath, renderedHtml)
     })
     .then(() => {

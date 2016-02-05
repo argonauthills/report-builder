@@ -4,3 +4,4 @@ typings
 temp
 *.js
 !rasterize.js
+.DS_Store

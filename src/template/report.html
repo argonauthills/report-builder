@@ -51,6 +51,10 @@
                 border-collapse: collapse;
             }
             .results-table-header {}
+            .results-table-labels-row {
+                border-left: solid 1px #231f20;  /*black*/
+                background-color: #d2d2d2; /*grey*/
+            }
             .results-table-row {
                 border-top: solid 1px #231f20;  /*black*/
                 border-bottom: solid 1px #231f20;  /*black*/
@@ -151,7 +155,7 @@
                 </table>
             </header>
             <table class="results-table stretch-width">
-                <tr class="results-table-row results-table-header">
+                <tr class="results-table-row results-table-labels-row">
                     <th class="results-table-cell question-cell-width large-row-height">{{section.header.description}}</th>
                     <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore}}</th>
                     <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm}}</th>
