@@ -48,9 +48,17 @@
             .results-table {
                 font-size: 8pt;
                 width:100%;
+                border-collapse: collapse;
             }
             .results-table-header {}
-            .results-table-row {}
+            .results-table-row {
+                border-top: solid 1px #231f20;  /*black*/
+                border-bottom: solid 1px #231f20;  /*black*/
+            }
+
+            .results-table-cell {
+                border-right: solid 1px #231f20;  /*black*/
+            }
 
             .question-cell-width {}
             .datum-cell-width {
@@ -127,11 +135,11 @@
             <header class="report-section-header stretch-width">
                 <table class="results-table stretch-width">
                     <tr class="results-table-row">
-                        <td class="question-cell-width normal-row-height">{{section.header.description}}</td>
-                        <td class="datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
+                        <td class="results-table-cell question-cell-width normal-row-height">{{section.header.description}}</td>
+                        <td class="results-table-cell datum-cell-width normal-row-height">{{section.header.orgScore.toFixed(2)}}</td>
                         <!-- <td class="datum-cell-width normal-row-height">{{section.header.industryNorm.toFixed(2)}}</td>
                         <td class="datum-cell-width normal-row-height">{{section.header.globalNorm.toFixed(2)}}</td> -->
-                        <td class="bar-chart-cell-width normal-row-height">
+                        <td class="results-table-cell bar-chart-cell-width normal-row-height">
                             <div class="bar-chart">
                                 <div class="bar-chart-bar" style="width:{{100 * section.header.orgScore / section.header.scale}}%;"></div>
                                 <div class="bar-chart-symbol-1" style="left:{{100 * section.header.industryNorm / section.header.scale}}%"></div>
@@ -143,18 +151,20 @@
                 </table>
             </header>
             <table class="results-table stretch-width">
-                <tr class="results-table-header">
-                    <th class="question-cell-width large-row-height"></th>
-                    <th class="datum-cell-width large-row-height"></th>
-                    <th class="bar-chart-cell-width large-row-height"></th>
+                <tr class="results-table-row results-table-header">
+                    <th class="results-table-cell question-cell-width large-row-height">{{section.header.description}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.orgScore}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.industryNorm}}</th>
+                    <th class="results-table-cell datum-cell-width large-row-height">{{section.globalNorm}}</th>
+                    <th class="results-table-cell bar-chart-cell-width large-row-height"></th>
                 </tr>
                 {% for question in section.questions %}
                 <tr class="results-table-row">
-                    <td class="question-cell-width normal-row-height">{{question.description}}</td>
-                    <td class="datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
-                    <td class="datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
-                    <td class="datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
-                    <td class="bar-chart-cell-width normal-row-height">
+                    <td class="results-table-cell question-cell-width normal-row-height">{{question.description}}</td>
+                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
+                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
+                    <td class="results-table-cell bar-chart-cell-width normal-row-height">
                         <div class="bar-chart">
                             <div class="bar-chart-bar" style="width:{{100 * question.orgScore / question.scale}}%;"></div>
                             <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / question.scale}}%"></div>
