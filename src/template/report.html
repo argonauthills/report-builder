@@ -274,8 +274,8 @@
                 position:absolute;
                 width:20px;
                 margin-left:-10px;
-                height:16px;
-                margin-top:-8px;
+                height:12px;
+                margin-top:-6px;
                 background-color: white;
                 top:50%;
                 display:table;
@@ -342,7 +342,7 @@
                             <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
                         {% endfor %}
                         {% for tick in tickMarkLabels(section.scale) %}
-                            <div class="bar-chart-division-label-white-bordered" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
+                            <div class="bar-chart-division-label-white-bordered medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
                         {% endfor %}
                         </div>
                     </td>
@@ -381,7 +381,7 @@
                     <td ></td>
                     <td class="bar-chart-cell-width" style="position:relative;">
                         {% for tick in tickMarkLabels(section.scale) %}
-                            <label class="bar-chart-division-label" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
+                            <label class="bar-chart-division-label medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
                         {% endfor %}
                     </td>
                 </tr>
