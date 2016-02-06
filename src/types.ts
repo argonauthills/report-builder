@@ -48,6 +48,7 @@ export interface ReportConfigSubsection {
 export interface ReportConfigQuestion {
     description: string;
     id: string;
+    includeNulls?: boolean;  // normally we ignore nulls; with this, we count them as zero
 }
 
 export interface RawDatum {

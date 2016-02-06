@@ -331,7 +331,7 @@
                                         <div class="bar-chart-symbol-1" style="left:{{100 * subsection.industryNorm / subsection.scale}}%"></div>
                                         <div class="bar-chart-symbol-2" style="left:{{100 * subsection.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
                                     </div>
-                                    {% for tick in tickMarks(section.scale) %}
+                                    {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                         <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
                                     {% endfor %}
                                 </div>
@@ -347,17 +347,17 @@
                         <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
                         <td class="results-table-cell large-row-height bar-chart-cell-width relative">
                             <div class="bar-chart-box-hack">
-                            {% for tick in tickMarks(subsection.scale) %}
+                            {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                 <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
                             {% endfor %}
-                            {% for tick in tickMarkLabels(subsection.scale) %}
+                            {% for tick in tickMarkLabels(subsection.scale, subsection.scaleInterval) %}
                                 <div class="bar-chart-division-label-white-bordered medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
                             {% endfor %}
                             </div>
                         </td>
                     </tr>
                     <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
-                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(subsection.header.description)}}</td>
+                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(subsection.description)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.orgScore.toFixed(2)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.industryNorm.toFixed(2)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.globalNorm.toFixed(2)}}</td>
@@ -376,7 +376,7 @@
                                     <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / subsection.scale}}%"></div>
                                     <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
                                 </div>
-                                {% for tick in tickMarks(subsection.scale) %}
+                                {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                     <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
                                 {% endfor %}
                             </div>
@@ -389,7 +389,7 @@
                         <td ></td>
                         <td ></td>
                         <td class="bar-chart-cell-width" style="position:relative;">
-                            {% for tick in tickMarkLabels(section.scale) %}
+                            {% for tick in tickMarkLabels(subsection.scale, subsection.scaleInterval) %}
                                 <label class="bar-chart-division-label medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>
                             {% endfor %}
                         </td>

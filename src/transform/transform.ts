@@ -38,7 +38,7 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
 }
 
 function transformQuestion(data:types.RawDatum[], configQuestion:types.ReportConfigQuestion, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.ReportQuestion {
-    var points = dataPoints(data, configQuestion.id)
+    var points = dataPoints(data, configQuestion.id, configQuestion.includeNulls)
     var industryNorm = getNorm(industryNorms, configQuestion.id)
     var globalNorm = getNorm(globalNorms, configQuestion.id)
     return {
@@ -54,12 +54,12 @@ function getNorm(norms: types.RawDatum, questionId:string):number {
     return norms[questionId]
 }
 
-function dataPoints(data:types.RawDatum[], questionId:string):number[] {
-    return _.reject<number>(data.map(function(datum) {
+function dataPoints(data:types.RawDatum[], questionId:string, includeNulls:boolean):number[] {
+    var points = data.map(function(datum) {
         return datum[questionId]
-    }), function(point) {
-        return point == null  // we omit nully data
     })
+    if (includeNulls) points = points.map((p) => { return p || 0 })
+    return _.reject<number>(points, (p) => { return p == null })  // we omit nully data
 }
 
 function sum(xs:number[]):number {

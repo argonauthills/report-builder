@@ -64,5 +64,5 @@ function tickMarks(scale: number, interval: number = 1): TickMark[] {
 }
 
 function htmlFriendly(str:string):string {
-    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/’/g, "&#39;");
+    return String(str).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/’/g, "&#39;").replace(/–/g, '&#8212;');
 }
