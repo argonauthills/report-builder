@@ -37,6 +37,7 @@ function main() {
             // console.log("industry", i[industryColumnName], typeof i[industryColumnName])
             return i[industryColumnName] == args.industryCode
         })
+        if (rawData.length < 5) return Promise.resolve("Too few data points for report").then((rs) => console.log(rs))
         if (!globalNorms) throw new Error("couldn't find global norms!")
         if (!industryNorms) throw new Error("couldn't find industry norms!")
         var report = transform.rawToReport(rawData, config, globalNorms, industryNorms)

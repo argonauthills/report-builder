@@ -7,6 +7,7 @@
         "./typings/requirejs/require.d.ts",
         "./typings/swig/swig.d.ts",
         "./typings/lodash/lodash.d.ts",
-        "./src/index.ts"
+        "./src/index.ts",
+        "./src/run-dir.ts"
     ]
 }
