@@ -91,7 +91,7 @@ function processReport(dataPath:string, c:ReportConfig) {
 
 function dirPaths(dir:string):string[] {
     var excludedFileNames = ['.DS_Store']
-    var fileNames = _.filter(fs.readdirSync(dir), (name) => _.includes(excludedFileNames, name))
+    var fileNames = _.filter(fs.readdirSync(dir), (name) => !_.includes(excludedFileNames, name))
     return fileNames.map((name) => path.join(dir, name))
 }
 
