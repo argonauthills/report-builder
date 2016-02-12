@@ -32,7 +32,7 @@ function main() {
         parse.fromCsv(args.industryCodes)
     ]))
     .spread(( rawData: types.RawDatum[], config:types.ReportConfig, rawGlobal:types.RawDatum[], rawIndustries:types.RawDatum[], rawIndustryCodes:types.RawDatum[]) => {
-        if (!!config.minDataPoints && rawData.length < config.minDataPoints) return Promise.resolve("Too few data points for report. Had "+rawData.length+" points.").then((rs) => console.log(rs))
+        if (!!config.minDataPoints && rawData.length < config.minDataPoints) return Promise.resolve("Too few data points for report. Had "+rawData.length+" point(s).").then((rs) => console.log(rs))
         var companyId = args.companyId
         var orgInfo = _.find(rawIndustryCodes, (row) => {
             // consolee.log(row['ProjectID'], typeof row['ProjectID'], companyId, typeof companyId)
