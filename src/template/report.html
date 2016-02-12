@@ -336,8 +336,12 @@
                                 <div class="bar-chart-box">
                                     <div class="bar-chart bar-chart-large">
                                         <div class="bar-chart-bar" style="width:{{100 * subsection.orgScore / subsection.scale}}%;"></div>
+                                        {% if !subsection.excludeIndustryNorms %}
                                         <div class="bar-chart-symbol-1" style="left:{{100 * subsection.industryNorm / subsection.scale}}%"></div>
+                                        {% endif %}
+                                        {% if !subsection.excludeGlobalNorms %}
                                         <div class="bar-chart-symbol-2" style="left:{{100 * subsection.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
+                                        {% endif %}
                                     </div>
                                     {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                         <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>

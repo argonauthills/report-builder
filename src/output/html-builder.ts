@@ -55,7 +55,7 @@ function tickMarkLabels(scale:number, interval:number=1):TickMark[] {
 }
 
 function tickMarks(scale: number, interval: number = 1): TickMark[] {
-    return _.range(1, scale /*we don't want tickMarks at endpoints*/, interval).map(function(mark: number) {
+    return _.range(interval, scale /*we don't want tickMarks at endpoints*/, interval).map(function(mark: number) {
         return {
             label: mark.toString(),
             percentOfScale: 100 * mark / scale
