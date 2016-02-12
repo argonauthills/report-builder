@@ -320,17 +320,17 @@
     </head>
     <body class="page-margins">
         <header class="page-break-after center-text">
-            <div>{{report.projectName}}</div>
+            <div>{{htmlFriendly(report.projectName)}}</div>
             <div><img class="stretch-width" src="{{report.mainUri}}"/></div>
-            <h2 class="separator">{{report.title}}</h2>
-            <div>{{report.companyName}}</div>
-            <div>Industry: {{report.industryName}}</div>
+            <h2 class="separator">{{htmlFriendly(report.title)}}</h2>
+            <div>{{htmlFriendly(report.companyName)}}</div>
+            <div>Industry: {{htmlFriendly(report.industryName)}}</div>
         </header>
         <header class="page-break-after">
             <h3 class="separator margin">Table of Contents</h3>
             <div class="big-area">
                 {% for section in report.sections %}
-                <div>Section {{indexOf(report.sections, section)}}: {{section.header}}</div>
+                <div>Section {{indexOf(report.sections, section)}}: {{htmlFriendly(section.header)}}</div>
                 {% endfor %}
             </div>
             <footer class="left-text"><img class="stretch-width" src="{{report.footerUri}}"></footer>
