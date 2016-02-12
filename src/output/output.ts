@@ -10,7 +10,7 @@ export function runOutput(data:types.Report, templatePath:string, destPath:strin
     .then(() => htmlBuilder.generateHtml(data, templatePath, tempDir))
     .then((tempHtmlPath: string) => {
         return pdfConverter.convertHtmlToPdf(tempHtmlPath, destPath)
-        // .then(() => cleanup(tempHtmlPath))
+        .then(() => cleanUpFile(tempHtmlPath))
     })
 }
 

@@ -33,7 +33,9 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
         industryNorm: mean(questions.map((q)=>q.industryNorm)),
         globalNorm: mean(questions.map((q)=>q.globalNorm)),
         scale: configSubsection.scale || 1,
-        scaleInterval: configSubsection.scaleInterval || 1
+        scaleInterval: configSubsection.scaleInterval || 1,
+        excludeIndustryNorms: configSubsection.excludeIndustryNorms,
+        excludeGlobalNorms: configSubsection.excludeGlobalNorms
     }
 }
 

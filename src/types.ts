@@ -14,6 +14,8 @@ export interface ReportSubsection {
     orgScore: number;
     industryNorm: number;
     globalNorm: number;
+    excludeGlobalNorms: boolean;
+    excludeIndustryNorms: boolean;
     scale: number;
     scaleInterval: number;
 }
@@ -43,6 +45,8 @@ export interface ReportConfigSubsection {
     questions: ReportConfigQuestion[];
     scale: number;
     scaleInterval: number;
+    excludeGlobalNorms?: boolean;
+    excludeIndustryNorms?: boolean;
 }
 
 export interface ReportConfigQuestion {

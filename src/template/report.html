@@ -156,6 +156,10 @@
                 border-right: solid 1px transparent;
             }
 
+            .results-table-cell-left-border {
+                border-left: solid 1px #231f20;  /*black*/
+            }
+
             .results-table-cell-padding { padding:3px; }
 
             .question-cell-width {}
@@ -305,14 +309,18 @@
             {% for subsection in section.subsections %}
             <section class="report-section no-page-break stretch-width">
                 <section class="report-key">
+                    {% if !subsection.excludeIndustryNorms %}
                     <div class="report-key-line">
                         <span class="medium-text align-middle">Industry Norm</span>
                         <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-1"></div></span>
                     </div>
+                    {% endif %}
+                    {% if !subsection.excludeGlobalNorms %}
                     <div class="report-key-line">
                         <span class="medium-text align-middle">Global Norm</span>
                         <span class="report-key-symbol-box align-middle"><div class="report-key-symbol bar-chart-symbol-2"><div class="bar-chart-symbol-2-inner"></div></div></span>
                     </div>
+                    {% endif %}
                 </section>
                 <header class="report-section-header stretch-width">
                     <table class="results-table stretch-width">
@@ -341,11 +349,15 @@
                 </header>
                 <table class="results-table stretch-width center-text">
                     <tr>
-                        <td class="results-table-cell-no-right-border large-row-height"></td>
-                        <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
-                        <td class="results-table-cell-no-right-border large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
-                        <td class="results-table-cell large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
-                        <td class="results-table-cell large-row-height bar-chart-cell-width relative">
+                        <td class="large-row-height"></td>
+                        <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
+                        {% if !subsection.excludeIndustryNorms %}
+                        <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
+                        {% endif %}
+                        {% if !subsection.excludeGlobalNorms %}
+                        <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
+                        {% endif %}
+                        <td class="results-table-cell results-table-cell-left-border large-row-height bar-chart-cell-width relative">
                             <div class="bar-chart-box-hack">
                             {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                 <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
@@ -359,22 +371,34 @@
                     <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
                         <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(subsection.description)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.orgScore.toFixed(2)}}</td>
+                        {% if !subsection.excludeIndustryNorms %}
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.industryNorm.toFixed(2)}}</td>
+                        {% endif %}
+                        {% if !subsection.excludeGlobalNorms %}
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.globalNorm.toFixed(2)}}</td>
+                        {% endif %}
                         <td class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></td>
                     </tr>
                     {% for question in subsection.questions %}
                     <tr class="results-table-row medium-text">
                         <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.orgScore.toFixed(2)}}</td>
+                        {% if !subsection.excludeIndustryNorms %}
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.industryNorm.toFixed(2)}}</td>
+                        {% endif %}
+                        {% if !subsection.excludeGlobalNorms %}
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{question.globalNorm.toFixed(2)}}</td>
+                        {% endif %}
                         <td class="results-table-cell bar-chart-cell-width normal-row-height relative">
                             <div class="bar-chart-box">
                                 <div class="bar-chart">
                                     <div class="bar-chart-bar" style="width:{{100 * question.orgScore / subsection.scale}}%;"></div>
+                                    {% if !subsection.excludeIndustryNorms %}
                                     <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / subsection.scale}}%"></div>
+                                    {% endif %}
+                                    {% if !subsection.excludeGlobalNorms %}
                                     <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
+                                    {% endif %}
                                 </div>
                                 {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                     <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
@@ -386,8 +410,12 @@
                     <tr class="results-table-bottom-labels-row">
                         <td ></td>
                         <td ></td>
+                        {% if !subsection.excludeIndustryNorms %}
                         <td ></td>
+                        {% endif %}
+                        {% if !subsection.excludeGlobalNorms %}
                         <td ></td>
+                        {% endif %}
                         <td class="bar-chart-cell-width" style="position:relative;">
                             {% for tick in tickMarkLabels(subsection.scale, subsection.scaleInterval) %}
                                 <label class="bar-chart-division-label medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</label>

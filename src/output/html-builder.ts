@@ -34,7 +34,7 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
         return writeFile(tempPath, renderedHtml)
     })
     .then(() => {
-        console.log("temp path", tempPath)
+        // console.log("temp path", tempPath)
         return tempPath
     })
 

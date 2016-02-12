@@ -14,6 +14,10 @@ Run
 
     node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf
 
+or, for a directory
+
+    node src/run-dir.js --globalNorms ~/Desktop/global-norms.csv --industryNorms ~/Desktop/industry-norms.csv --config ~/Desktop/new-report-config.json --dataDir ~/Desktop/csv-data --destDir ~/Desktop/pdf-output --industryCodes ~/Desktop/industry-codes.csv
+
 Develop
 -------
 
