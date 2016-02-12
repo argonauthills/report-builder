@@ -38,7 +38,7 @@
                 page-break-after: always;
             }
             .page-break-after:last-child {
-                page-break-before: auto;
+                page-break-after: auto;
             }
 
             .stretch-width {
@@ -50,6 +50,14 @@
 
 
             .relative { position:relative; }
+
+            .separator {
+                border-bottom: solid 1px #231f20;  /*black*/
+            }
+            .margin {
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
 
             /* TEXT */
 
@@ -295,6 +303,23 @@
         </style>
     </head>
     <body class="page-margins">
+        <header class="page-break-after center-text">
+            <div>{{report.projectName}}</div>
+            <div><img class="stretch-width" src="{{report.mainUri}}"/></div>
+            <h2 class="separator">{{report.title}}</h2>
+            <div>{{report.companyName}}</div>
+            <div>Industry: {{report.industryName}}</div>
+        </header>
+        <header class="page-break-after">
+            <h3 class="separator margin">Table of Contents</h3>
+            <div>
+                {% for section in report.sections %}
+                <div>Section {{indexOf(report.sections, section)}}: {{section.header}}</div>
+                {% endfor %}
+            </div>
+            <footer><img class="stretch-width" src="{{report.footerUri}}"></footer>
+        </header>
+
         {% for section in report.sections %}
         <article class="report page-break-after">
             <header class="report-header no-page-break stretch-width">

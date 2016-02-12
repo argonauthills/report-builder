@@ -1,12 +1,18 @@
 import types = require('../types')
 import _ = require('lodash')
 
-export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, globalNorms:types.RawDatum, industryNorms:types.RawDatum):types.Report {
+export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, globalNorms:types.RawDatum, industryNorms:types.RawDatum, companyName:string, industryName:string, mainUri:string, footerUri:string):types.Report {
     var transformedSections:types.ReportSection[] = config.sections.map(function(configSection) {
         return transformSection(data, configSection, globalNorms, industryNorms)
     })
-
+    console.log("config", config.projectName)
     return {
+        projectName: config.projectName,
+        mainUri: mainUri,
+        footerUri: footerUri,
+        title: config.title,
+        companyName: companyName,
+        industryName: industryName,
         sections: transformedSections
     }
 }

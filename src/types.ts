@@ -1,4 +1,10 @@
 export interface Report {
+    projectName: string;
+    mainUri: string;
+    footerUri: string;
+    title: string;
+    companyName: string;
+    industryName: string;
     sections: ReportSection[];
 }
 
@@ -31,6 +37,10 @@ export interface ReportQuestion {
 
 
 export interface ReportConfig {
+    projectName: string;
+    mainImage: string;
+    footerImage: string;
+    title: string;
     sections: ReportConfigSection[];
 }
 

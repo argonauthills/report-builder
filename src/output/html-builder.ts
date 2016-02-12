@@ -27,14 +27,15 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
         report: data,
         tickMarks: tickMarks,
         tickMarkLabels: tickMarkLabels,
-        htmlFriendly: htmlFriendly
+        htmlFriendly: htmlFriendly,
+        indexOf: indexOf
     }
     return renderFile(templatePath, options)
     .then((renderedHtml:string) => {
         return writeFile(tempPath, renderedHtml)
     })
     .then(() => {
-        // console.log("temp path", tempPath)
+        console.log("temp path", tempPath)
         return tempPath
     })
 
@@ -44,6 +45,10 @@ export function randomHtmlName(dir:string):string {
     return path.join(dir, id.generate(10)+'.html')
 }
 
+
+function indexOf(items, item) {
+    return _.indexOf(items, item) + 1
+}
 
 function tickMarkLabels(scale:number, interval:number=1):TickMark[] {
     return _.range(0, scale+1 /* we want the endpoints too */, interval).map(function(mark:number) {

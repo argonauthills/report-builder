@@ -8,6 +8,7 @@ import parse = require('./parse/parse')
 import transform = require('./transform/transform')
 import types = require('./types')
 import _ = require('lodash')
+var DataURI = require('datauri').promise;
 var parseArgs = require('minimist')
 
 function random(num:number) {
@@ -33,12 +34,14 @@ function main() {
     .spread(( rawData: types.RawDatum[], config:types.ReportConfig, rawGlobal:types.RawDatum[], rawIndustries:types.RawDatum[], rawIndustryCodes:types.RawDatum[]) => {
         if (rawData.length < 5) return Promise.resolve("Too few data points for report").then((rs) => console.log(rs))
         var companyId = args.companyId
-        var industryCode = _.find(rawIndustryCodes, (row) => {
+        var orgInfo = _.find(rawIndustryCodes, (row) => {
             // consolee.log(row['ProjectID'], typeof row['ProjectID'], companyId, typeof companyId)
             return row['ProjectID'] == companyId
-        })['IndustryCode']
+        })
+        var industryCode = orgInfo['IndustryCode']
+        var companyName = orgInfo['OrgName']
+        var industryName = orgInfo['IndustryType']
 
-        console.log("IndustryCode", industryCode)
         var globalNorms = _.first(rawGlobal)  //there's only one
         var industryNorms = _.find(rawIndustries, function(i) {
             var industryColumnName = "NAICS2.n"
@@ -49,8 +52,17 @@ function main() {
         if (!globalNorms) throw new Error("couldn't find global norms!")
         if (!industryNorms) throw new Error("couldn't find industry norms!")
         if (!industryCode) throw new Error("couldn't find industry code!")
-        var report = transform.rawToReport(rawData, config, globalNorms, industryNorms)
-        return output.runOutput(report, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
+
+        console.log("main image", config.mainImage)
+        return Promise.all([
+            DataURI(config.mainImage),
+            DataURI(config.footerImage)
+        ])
+        .spread(function(mainUri:string, footerUri:string) {
+            var report = transform.rawToReport(rawData, config, globalNorms, industryNorms, companyName, industryName, mainUri, footerUri)
+            return output.runOutput(report, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
+        })
+        .then(() => null)
     })
     .then(() => console.log("DONE!\n"))
     .catch((err) => console.log("Err", err, err.stack))
