@@ -78,7 +78,8 @@ function processReport(dataPath:string, c:ReportConfig) {
         '--data', dataPath,
         '--globalNorms', c.globalNormsPath,
         '--industryNorms', c.industryNormsPath,
-        '--industryCode', 21,  //TODO: get actual industry code from map
+        '--industryCodes', c.industryCodesPath,
+        '--companyId', companyCode
     ].join(' ')
 
     console.log("---","Processing", companyCode, "---")
