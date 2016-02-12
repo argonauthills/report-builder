@@ -59,6 +59,10 @@
                 margin-bottom: 20px;
             }
 
+            .big-area {
+                height: 472px;  /* hack to push our thing to the bottom */
+            }
+
             /* TEXT */
 
 
@@ -312,19 +316,19 @@
         </header>
         <header class="page-break-after">
             <h3 class="separator margin">Table of Contents</h3>
-            <div>
+            <div class="big-area">
                 {% for section in report.sections %}
                 <div>Section {{indexOf(report.sections, section)}}: {{section.header}}</div>
                 {% endfor %}
             </div>
-            <footer><img class="stretch-width" src="{{report.footerUri}}"></footer>
+            <footer class="left-text"><img class="stretch-width" src="{{report.footerUri}}"></footer>
         </header>
 
         {% for section in report.sections %}
         <article class="report page-break-after">
             <header class="report-header no-page-break stretch-width">
                 <div class="headline-text bold-text report-header-title">
-                    {{htmlFriendly(section.header)}}
+                    Section {{indexOf(report.sections, section)}}: {{htmlFriendly(section.header)}}
                 </div>
                 <div class="large-text report-header-description">
                     {{htmlFriendly(section.description)}}

@@ -5,7 +5,6 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, gl
     var transformedSections:types.ReportSection[] = config.sections.map(function(configSection) {
         return transformSection(data, configSection, globalNorms, industryNorms)
     })
-    console.log("config", config.projectName)
     return {
         projectName: config.projectName,
         mainUri: mainUri,
