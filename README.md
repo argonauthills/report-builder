@@ -12,9 +12,13 @@ Install
 Run
 ---
 
-    node src/index.js --config /path/to/config.json --data /path/to/data.csv --dest /path/to/destination.pdf
+Note, we currently require the data files to the in the form `hrsc-2004.csv` where `2004` is the company id.
 
-or, for a directory
+####Single report
+
+    node src/index.js --globalNorms ~/Desktop/global-norms.csv --industryNorms ~/Desktop/industry-norms.csv --config ~/Desktop/report-config.json --dataDir ~/Desktop/csv-data --destDir ~/Desktop/pdf-output --industryCodes ~/Desktop/industry-codes.csv
+
+####Directory
 
     node src/run-dir.js --globalNorms ~/Desktop/global-norms.csv --industryNorms ~/Desktop/industry-norms.csv --config ~/Desktop/new-report-config.json --dataDir ~/Desktop/csv-data --destDir ~/Desktop/pdf-output --industryCodes ~/Desktop/industry-codes.csv
 

@@ -31,18 +31,20 @@ function main() {
         parse.fromCsv(args.industryCodes)
     ]))
     .spread(( rawData: types.RawDatum[], config:types.ReportConfig, rawGlobal:types.RawDatum[], rawIndustries:types.RawDatum[], rawIndustryCodes:types.RawDatum[]) => {
+        if (rawData.length < 5) return Promise.resolve("Too few data points for report").then((rs) => console.log(rs))
         var companyId = args.companyId
         var industryCode = _.find(rawIndustryCodes, (row) => {
-            return row['CompanyID'] == args.companyId
+            // consolee.log(row['ProjectID'], typeof row['ProjectID'], companyId, typeof companyId)
+            return row['ProjectID'] == companyId
         })['IndustryCode']
+
+        console.log("IndustryCode", industryCode)
         var globalNorms = _.first(rawGlobal)  //there's only one
         var industryNorms = _.find(rawIndustries, function(i) {
             var industryColumnName = "NAICS2.n"
             // console.log("industry", i[industryColumnName], typeof i[industryColumnName])
             return i[industryColumnName] == industryCode
         })
-
-        if (rawData.length < 5) return Promise.resolve("Too few data points for report").then((rs) => console.log(rs))
         if (!companyId) throw new Error("missing company id")
         if (!globalNorms) throw new Error("couldn't find global norms!")
         if (!industryNorms) throw new Error("couldn't find industry norms!")
