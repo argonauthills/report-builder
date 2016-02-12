@@ -53,7 +53,6 @@ function main() {
         if (!industryNorms) throw new Error("couldn't find industry norms!")
         if (!industryCode) throw new Error("couldn't find industry code!")
 
-        console.log("main image", config.mainImage)
         return Promise.all([
             DataURI(config.mainImage),
             DataURI(config.footerImage)

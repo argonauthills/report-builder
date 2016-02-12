@@ -15,6 +15,7 @@ export interface ReportSection {
 }
 
 export interface ReportSubsection {
+    title: string;
     description: string;
     questions: ReportQuestion[];
     orgScore: number;
@@ -22,6 +23,8 @@ export interface ReportSubsection {
     globalNorm: number;
     excludeGlobalNorms: boolean;
     excludeIndustryNorms: boolean;
+    excludeKey: boolean;
+    excludeHeader: boolean;
     scale: number;
     scaleInterval: number;
 }
@@ -52,11 +55,14 @@ export interface ReportConfigSection {
 
 export interface ReportConfigSubsection {
     header: string;
+    description: string;
     questions: ReportConfigQuestion[];
     scale: number;
     scaleInterval: number;
     excludeGlobalNorms?: boolean;
     excludeIndustryNorms?: boolean;
+    excludeKey?: boolean;
+    excludeHeader?: boolean;
 }
 
 export interface ReportConfigQuestion {

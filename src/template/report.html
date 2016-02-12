@@ -63,6 +63,16 @@
                 height: 472px;  /* hack to push our thing to the bottom */
             }
 
+            .absolute-top {
+                position:absolute;
+                top:0;
+            }
+
+            .absolute-right {
+                position:absolute;
+                right:0;
+            }
+
             /* TEXT */
 
 
@@ -115,7 +125,9 @@
             }
 
             /* REPORT SECTION */
-            .report-section {}
+            .report-section {
+                position: relative;
+            }
             .report-section-header {}
             .section-org-score {
                 width: 170px;
@@ -337,7 +349,8 @@
 
             {% for subsection in section.subsections %}
             <section class="report-section no-page-break stretch-width">
-                <section class="report-key">
+                {% if !subsection.excludeKey %}
+                <section class="report-key {% if subsection.excludeHeader %}absolute-top absolute-right{% endif %}">
                     {% if !subsection.excludeIndustryNorms %}
                     <div class="report-key-line">
                         <span class="medium-text align-middle">Industry Norm</span>
@@ -351,10 +364,12 @@
                     </div>
                     {% endif %}
                 </section>
+                {% endif %}
+                {% if !subsection.excludeHeader %}
                 <header class="report-section-header stretch-width">
                     <table class="results-table stretch-width">
                         <tr class="results-table-row">
-                            <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{htmlFriendly(subsection.description)}}</td>
+                            <td class="headline-text-small bold-text left-text results-table-cell question-cell-width large-row-height">{{htmlFriendly(subsection.title)}}</td>
                             <td class="large-text bold-text results-table-cell section-org-score large-row-height">
                                 <div>
                                     <div class="inline-block section-org-score-label medium-text">ORGANIZATION<br>SCORE</div>
@@ -380,9 +395,12 @@
                         </tr>
                     </table>
                 </header>
+                {% endif %}
                 <table class="results-table stretch-width center-text">
                     <tr>
-                        <td class="large-row-height"></td>
+                        <td class="large-row-height left-text bold-text medium-text">
+                            {{htmlFriendly(subsection.description)}}
+                        </td>
                         <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Org Score</div></td>
                         {% if !subsection.excludeIndustryNorms %}
                         <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Industry Norm</div></td>
@@ -390,7 +408,8 @@
                         {% if !subsection.excludeGlobalNorms %}
                         <td class="large-row-height datum-cell-width"><div class="rotated-label medium-text right-text label-width">Global Norm</div></td>
                         {% endif %}
-                        <td class="results-table-cell results-table-cell-left-border large-row-height bar-chart-cell-width relative">
+                        <td class="{% if !subsection.excludeHeader %}results-table-cell results-table-cell-left-border{% endif %} large-row-height bar-chart-cell-width relative">
+                            {% if !subsection.excludeHeader %}
                             <div class="bar-chart-box-hack">
                             {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
                                 <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
@@ -399,10 +418,12 @@
                                 <div class="bar-chart-division-label-white-bordered medium-text" style="left:{{tick.percentOfScale}}%">{{tick.label}}</div>
                             {% endfor %}
                             </div>
+                            {% endif %}
                         </td>
                     </tr>
+                    {% if !subsection.excludeHeader %}
                     <tr class="results-table-row results-table-row-height results-table-labels-row large-text bold-text">
-                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(subsection.description)}}</td>
+                        <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height left-text">{{htmlFriendly(subsection.title)}}</td>
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.orgScore.toFixed(2)}}</td>
                         {% if !subsection.excludeIndustryNorms %}
                         <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{subsection.industryNorm.toFixed(2)}}</td>
@@ -412,6 +433,7 @@
                         {% endif %}
                         <td class="results-table-cell results-table-cell-padding bar-chart-cell-width normal-row-height"></td>
                     </tr>
+                    {% endif %}
                     {% for question in subsection.questions %}
                     <tr class="results-table-row medium-text">
                         <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>

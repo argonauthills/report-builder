@@ -32,7 +32,8 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
         return transformQuestion(data, configQuestion, globalNorms, industryNorms)
     })
     return {
-        description: configSubsection.header,
+        title: configSubsection.header,
+        description: configSubsection.description,
         questions: questions,
         orgScore: mean(questions.map((q) => q.orgScore)),
         industryNorm: mean(questions.map((q)=>q.industryNorm)),
@@ -40,7 +41,9 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
         scale: configSubsection.scale || 1,
         scaleInterval: configSubsection.scaleInterval || 1,
         excludeIndustryNorms: configSubsection.excludeIndustryNorms,
-        excludeGlobalNorms: configSubsection.excludeGlobalNorms
+        excludeGlobalNorms: configSubsection.excludeGlobalNorms,
+        excludeHeader: configSubsection.excludeHeader,
+        excludeKey: configSubsection.excludeKey
     }
 }
 
