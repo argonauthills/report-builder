@@ -42,6 +42,7 @@ export interface ReportQuestion {
 
 
 export interface ReportConfig {
+    minDataPoints: number;
     excludeTableOfContents: boolean;
     excludeCoverPage: boolean;
     projectName: string;
