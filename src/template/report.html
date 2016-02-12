@@ -319,6 +319,7 @@
         </style>
     </head>
     <body class="page-margins">
+        {% if !report.excludeCoverPage %}
         <header class="page-break-after center-text">
             <div>{{htmlFriendly(report.projectName)}}</div>
             <div><img class="stretch-width" src="{{report.mainUri}}"/></div>
@@ -326,6 +327,8 @@
             <div>{{htmlFriendly(report.companyName)}}</div>
             <div>Industry: {{htmlFriendly(report.industryName)}}</div>
         </header>
+        {% endif %}
+        {% if !report.excludeTableOfContents %}
         <header class="page-break-after">
             <h3 class="separator margin">Table of Contents</h3>
             <div class="big-area">
@@ -335,6 +338,7 @@
             </div>
             <footer class="left-text"><img class="stretch-width" src="{{report.footerUri}}"></footer>
         </header>
+        {% endif %}
 
         {% for section in report.sections %}
         <article class="report page-break-after">

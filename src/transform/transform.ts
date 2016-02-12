@@ -12,7 +12,9 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, gl
         title: config.title,
         companyName: companyName,
         industryName: industryName,
-        sections: transformedSections
+        sections: transformedSections,
+        excludeTableOfContents: config.excludeTableOfContents,
+        excludeCoverPage: config.excludeCoverPage
     }
 }
 

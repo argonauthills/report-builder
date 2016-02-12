@@ -54,10 +54,10 @@ function main() {
         if (!industryCode) throw new Error("couldn't find industry code!")
 
         return Promise.all([
-            DataURI(config.mainImage),
-            DataURI(config.footerImage)
+            (config.mainImage) ? DataURI(config.mainImage) : Promise.resolve(null),
+            (config.footerImage) ? DataURI(config.footerImage) : Promise.resolve(null)
         ])
-        .spread(function(mainUri:string, footerUri:string) {
+        .spread(function(mainUri?:string, footerUri?:string) {
             var report = transform.rawToReport(rawData, config, globalNorms, industryNorms, companyName, industryName, mainUri, footerUri)
             return output.runOutput(report, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
         })

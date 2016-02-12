@@ -1,4 +1,6 @@
 export interface Report {
+    excludeTableOfContents: boolean;
+    excludeCoverPage: boolean;
     projectName: string;
     mainUri: string;
     footerUri: string;
@@ -40,6 +42,8 @@ export interface ReportQuestion {
 
 
 export interface ReportConfig {
+    excludeTableOfContents: boolean;
+    excludeCoverPage: boolean;
     projectName: string;
     mainImage: string;
     footerImage: string;
