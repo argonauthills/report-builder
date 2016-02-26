@@ -21,6 +21,10 @@
                 /*table-layout: fixed;*/
             }
 
+            body {
+                margin: 0;
+            }
+
             /* UTILITIES */
             .no-page-break {
                 page-break-inside: avoid;
@@ -96,7 +100,9 @@
 
             .align-middle { vertical-align: middle; }
 
-
+            .page-margins {
+                margin: 18px;
+            }
 
             /* REPORT HEADER */
             .report-header {}
@@ -317,7 +323,7 @@
 
         </style>
     </head>
-    <body>
+    <body class="page-margins">
         {% if !report.excludeCoverPage %}
         <header class="page-break-after center-text">
             <div>{{htmlFriendly(report.projectName)}}</div>

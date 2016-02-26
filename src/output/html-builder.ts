@@ -60,7 +60,7 @@ function tickMarkLabels(scale:number, showAsPercent:boolean, interval:number=1):
         else label = mark
         return {
             label: label,
-            percentOfScale: 100 * mark / scale
+            percentOfScale: Math.round(100 * mark / scale)  // we round to the nearest percent to avoid "100.000001%"
         }
     })
 }
@@ -69,12 +69,13 @@ function tickMarks(scale: number, interval: number = 1): TickMark[] {
     return _.range(interval, scale /*we don't want tickMarks at endpoints*/, interval).map(function(mark: number) {
         return {
             label: mark.toString(),
-            percentOfScale: 100 * mark / scale
+            percentOfScale: Math.round(100 * mark / scale)  // we round to the nearest percent to avoid "100.000001%"
         }
     })
 }
 
 function displayNumber(showAsPercent:boolean, num:number):string {
+    if (!_.isNumber(num)) throw new Error('Cannot display output; '+num+" is not a number" )
     if (showAsPercent) return (num * 100).toFixed(1) + "%"
     return num.toFixed(2)
 }

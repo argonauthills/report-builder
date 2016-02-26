@@ -43,14 +43,15 @@ if (system.args.length < 3 || system.args.length > 10) {
     page.paperSize = {
         format: format,
         orientation: 'portrait',
-        margin: '.5in',
+        margin: '0.5in',
         header: {
             height: ".5cm",
             contents: phantom.callback(function(pageNum, numPages) {
                 var currentPageNumber = (Number(pageNum) - 1) + firstPageNumber
                 var showNumber = currentPageNumber >= numberPagesFrom
                 if (!showNumber) return "<div></div>"
-                return "<div style='font-family: sans-serif; font-size: 50%; posiiton:relative;'><span style='position:absolute; top:0; right:8;'>"+ currentPageNumber + "</span></div>";
+                // we position 18px because the webpage itself has that padding, so that things flowing into the margins won't get cut off.
+                return "<div style='font-family: sans-serif; font-size: 50%; position:relative;'><span style='position:absolute; top:0; right:10px;'>"+ currentPageNumber + "</span></div>";
             })
         },
         footer: {
@@ -60,8 +61,8 @@ if (system.args.length < 3 || system.args.length > 10) {
                 var currentPageNumber = (Number(pageNum) - 1) + firstPageNumber
                 if (firstFooterStart != null && currentPageNumber >= firstFooterStart) footerText = firstFooter
                 if (secondFooterStart != null && currentPageNumber >= secondFooterStart) footerText = secondFooter
-                    // &copy; 2016 The RBL Group
-                return "<div style='font-family: sans-serif; font-size: 50%;'>" + footerText + "</div>";
+                // we pad by 18px because the webpage itself has that padding, so that things flowing into the margins won't get cut off.
+                return "<div style='position:relative;'><div style='font-family: sans-serif; font-size: 50%; position:absolute; left: 10px;'>" + footerText + "</div></div>";
             })
         }
     }
