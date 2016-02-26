@@ -75,7 +75,6 @@ function tickMarks(scale: number, interval: number = 1): TickMark[] {
 }
 
 function displayNumber(showAsPercent:boolean, num:number):string {
-    if (!_.isNumber(num)) return ""
     if (showAsPercent) return (num * 100).toFixed(1) + "%"
     return num.toFixed(2)
 }
