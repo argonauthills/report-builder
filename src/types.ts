@@ -1,4 +1,6 @@
 export interface Report {
+    numberPagesFrom: number;
+    firstPageNumber: number;
     excludeTableOfContents: boolean;
     excludeCoverPage: boolean;
     projectName: string;
@@ -42,6 +44,8 @@ export interface ReportQuestion {
 
 
 export interface ReportConfig {
+    numberPagesFrom: number;
+    firstPageNumber: number;
     minDataPoints: number;
     excludeTableOfContents: boolean;
     excludeCoverPage: boolean;

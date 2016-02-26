@@ -7,12 +7,14 @@ var phantomjs = require('phantomjs')
 var binPath = phantomjs.path
 var execFile = Promise.promisify<any, string, string[]>(childProcess.execFile)
 
-export function convertHtmlToPdf(htmlPath, destPath):Promise<any> {
+export function convertHtmlToPdf(htmlPath, destPath, firstPageNumber, numbersPagesFrom):Promise<any> {
     var childArgs = [
         path.join(__dirname, 'rasterize.js'),  // rasterize script
         htmlPath,
         destPath,
-        'letter'
+        'letter',
+        firstPageNumber,
+        numbersPagesFrom
     ]
 
     return execFile(binPath, childArgs)

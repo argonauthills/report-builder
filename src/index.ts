@@ -59,7 +59,11 @@ function main() {
         ])
         .spread(function(mainUri?:string, footerUri?:string) {
             var report = transform.rawToReport(rawData, config, globalNorms, industryNorms, companyName, industryName, mainUri, footerUri)
-            return output.runOutput(report, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY)
+            var firstPageNumber = config.firstPageNumber
+            var numberPagesFrom = config.numberPagesFrom
+            if (firstPageNumber == null) throw new Error("firstPageNumber required in report config")
+            if (numberPagesFrom == null) throw new Error("numberPagesFrom required in report config")
+            return output.runOutput(report, settings.TEMPLATE_PATH, args.dest, settings.TEMP_DIRECTORY, firstPageNumber, numberPagesFrom)
         })
         .then(() => null)
     })

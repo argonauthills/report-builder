@@ -6,6 +6,8 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, gl
         return transformSection(data, configSection, globalNorms, industryNorms)
     })
     return {
+        numberPagesFrom: config.numberPagesFrom,
+        firstPageNumber: config.firstPageNumber,
         projectName: config.projectName,
         mainUri: mainUri,
         footerUri: footerUri,
