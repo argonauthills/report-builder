@@ -9,7 +9,7 @@ export function runOutput(data:types.Report, templatePath:string, destPath:strin
     return Promise.resolve(null)
     .then(() => htmlBuilder.generateHtml(data, templatePath, tempDir))
     .then((tempHtmlPath: string) => {
-        return pdfConverter.convertHtmlToPdf(tempHtmlPath, destPath, firstPageNumber, numbersPagesFrom)
+        return pdfConverter.convertHtmlToPdf(tempHtmlPath, destPath, firstPageNumber, numbersPagesFrom, data.footers)
         .then(() => cleanUpFile(tempHtmlPath))
     })
 }

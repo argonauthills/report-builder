@@ -3,7 +3,7 @@ var page = require('webpage').create(),
     system = require('system'),
     address, output, size, format, firstPageNumber, numberPagesFrom, header;
 
-if (system.args.length < 3 || system.args.length > 7) {
+if (system.args.length < 3 || system.args.length > 10) {
     phantom.exit(1);
 } else {
     address = system.args[1];
@@ -11,6 +11,10 @@ if (system.args.length < 3 || system.args.length > 7) {
     format = system.args[3];
     firstPageNumber = Number(system.args[4]);
     numberPagesFrom = Number(system.args[5]);
+    var firstFooter = system.args[6]
+    var firstFooterStart = Number(system.args[7])
+    var secondFooter = system.args[8]
+    var secondFooterStart = Number(system.args[9])
 
     page.viewportSize = { width: 600, height: 600 };
     // if (system.args.length > 3 && system.args[2].substr(-4) === ".pdf") {
@@ -52,7 +56,12 @@ if (system.args.length < 3 || system.args.length > 7) {
         footer: {
             height: ".5cm",
             contents: phantom.callback(function(pageNum, numPages) {
-                return "<div style='font-family: sans-serif; font-size: 50%;'>&copy; 2016 The RBL Group</div>";
+                var footerText= ""
+                var currentPageNumber = (Number(pageNum) - 1) + firstPageNumber
+                if (firstFooterStart != null && currentPageNumber >= firstFooterStart) footerText = firstFooter
+                if (secondFooterStart != null && currentPageNumber >= secondFooterStart) footerText = secondFooter
+                    // &copy; 2016 The RBL Group
+                return "<div style='font-family: sans-serif; font-size: 50%;'>" + footerText + "</div>";
             })
         }
     }

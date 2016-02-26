@@ -9,6 +9,7 @@ export interface Report {
     title: string;
     companyName: string;
     industryName: string;
+    footers: ReportFooters;
     sections: ReportSection[];
 }
 
@@ -41,7 +42,12 @@ export interface ReportQuestion {
     globalNorm: number;
 }
 
-
+export interface ReportFooters {
+    firstFooter: string;
+    firstFooterStart: number;
+    secondFooter: string;
+    secondFooterStart: number;
+}
 
 
 export interface ReportConfig {
@@ -53,6 +59,7 @@ export interface ReportConfig {
     projectName: string;
     mainImage: string;
     footerImage: string;
+    footers?: ReportFooters;
     title: string;
     sections: ReportConfigSection[];
 }
