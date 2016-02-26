@@ -39,14 +39,14 @@ if (system.args.length < 3 || system.args.length > 7) {
     page.paperSize = {
         format: format,
         orientation: 'portrait',
-        margin: '1cm',
+        margin: '.5in',
         header: {
             height: ".5cm",
             contents: phantom.callback(function(pageNum, numPages) {
                 var currentPageNumber = (Number(pageNum) - 1) + firstPageNumber
                 var showNumber = currentPageNumber >= numberPagesFrom
                 if (!showNumber) return "<div></div>"
-                return "<div style='font-family: sans-serif; font-size: 50%; float: right;'>"+ currentPageNumber + "</div>";
+                return "<div style='font-family: sans-serif; font-size: 50%; posiiton:relative;'><span style='position:absolute; top:0; right:8;'>"+ currentPageNumber + "</span></div>";
             })
         },
         footer: {
