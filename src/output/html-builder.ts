@@ -28,7 +28,8 @@ export function generateHtml(data:types.Report, templatePath:string, tempDir:str
         tickMarks: tickMarks,
         tickMarkLabels: tickMarkLabels,
         htmlFriendly: htmlFriendly,
-        indexOf: indexOf
+        indexOf: indexOf,
+        displayNumber: displayNumber
     }
     return renderFile(templatePath, options)
     .then((renderedHtml:string) => {
@@ -50,10 +51,15 @@ function indexOf(items, item) {
     return _.indexOf(items, item) + 1
 }
 
-function tickMarkLabels(scale:number, interval:number=1):TickMark[] {
+function tickMarkLabels(scale:number, showAsPercent:boolean, interval:number=1):TickMark[] {
+    var showDecimals = !_.isInteger(interval)
     return _.range(0, scale+1 /* we want the endpoints too */, interval).map(function(mark:number) {
+        var label;
+        if (showAsPercent) label = (mark * 100).toFixed(0)
+        else if (showDecimals) label = mark.toFixed(2)
+        else label = mark
         return {
-            label: mark.toString(),
+            label: label,
             percentOfScale: 100 * mark / scale
         }
     })
@@ -66,6 +72,11 @@ function tickMarks(scale: number, interval: number = 1): TickMark[] {
             percentOfScale: 100 * mark / scale
         }
     })
+}
+
+function displayNumber(showAsPercent:boolean, num:number) {
+    if (showAsPercent) return (num * 100).toFixed(1) + "%"
+    return num.toFixed(2)
 }
 
 function htmlFriendly(str:string):string {

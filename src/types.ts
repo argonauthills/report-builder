@@ -31,6 +31,7 @@ export interface ReportSubsection {
     excludeHeader: boolean;
     scale: number;
     scaleInterval: number;
+    showAsPercent: number;
 }
 
 export interface ReportQuestion {
@@ -68,6 +69,7 @@ export interface ReportConfigSubsection {
     questions: ReportConfigQuestion[];
     scale: number;
     scaleInterval: number;
+    showAsPercent: number;
     excludeGlobalNorms?: boolean;
     excludeIndustryNorms?: boolean;
     excludeKey?: boolean;

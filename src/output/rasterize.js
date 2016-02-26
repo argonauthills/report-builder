@@ -41,7 +41,7 @@ if (system.args.length < 3 || system.args.length > 7) {
         orientation: 'portrait',
         margin: '1cm',
         header: {
-            height: "1.2cm",
+            height: ".5cm",
             contents: phantom.callback(function(pageNum, numPages) {
                 var currentPageNumber = (Number(pageNum) - 1) + firstPageNumber
                 var showNumber = currentPageNumber >= numberPagesFrom
@@ -50,7 +50,7 @@ if (system.args.length < 3 || system.args.length > 7) {
             })
         },
         footer: {
-            height: "1.2cm",
+            height: ".5cm",
             contents: phantom.callback(function(pageNum, numPages) {
                 return "<div style='font-family: sans-serif; font-size: 50%;'>&copy; 2016 The RBL Group</div>";
             })
