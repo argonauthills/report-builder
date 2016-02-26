@@ -3,6 +3,7 @@ export interface Report {
     firstPageNumber: number;
     excludeTableOfContents: boolean;
     excludeCoverPage: boolean;
+    excludeSectionNumbers: boolean;
     projectName: string;
     mainUri: string;
     footerUri: string;
@@ -55,6 +56,7 @@ export interface ReportConfig {
     firstPageNumber: number;
     minDataPoints: number;
     excludeTableOfContents: boolean;
+    excludeSectionNumbers: boolean;
     excludeCoverPage: boolean;
     projectName: string;
     mainImage: string;

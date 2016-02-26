@@ -332,7 +332,12 @@
             <h3 class="separator margin">Table of Contents</h3>
             <div class="big-area">
                 {% for section in report.sections %}
-                <div>Section {{indexOf(report.sections, section)}}: {{htmlFriendly(section.header)}}</div>
+                <div>
+                    {% if !report.excludeSectionNumbers %}
+                        Section {{indexOf(report.sections, section)}}:
+                    {% endif %}
+                    {{htmlFriendly(section.header)}}
+                </div>
                 {% endfor %}
             </div>
             <footer class="left-text"><img class="stretch-width" src="{{report.footerUri}}"></footer>
@@ -343,7 +348,10 @@
         <article class="report page-break-after">
             <header class="report-header no-page-break stretch-width">
                 <div class="headline-text bold-text report-header-title">
-                    Section {{indexOf(report.sections, section)}}: {{htmlFriendly(section.header)}}
+                    {% if !report.excludeSectionNumbers %}
+                        Section {{indexOf(report.sections, section)}}:
+                    {% endif %}
+                    {{htmlFriendly(section.header)}}
                 </div>
                 <div class="large-text report-header-description">
                     {{htmlFriendly(section.description)}}
