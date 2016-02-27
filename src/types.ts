@@ -34,6 +34,7 @@ export interface ReportSubsection {
     scale: number;
     scaleInterval: number;
     showAsPercent: number;
+    scaleExplanation?: ReportScaleExplanation;
 }
 
 export interface ReportQuestion {
@@ -50,6 +51,20 @@ export interface ReportFooters {
     secondFooterStart: number;
 }
 
+export interface ReportScaleExplanation {
+    description: string;
+    scaleValues: ReportScaleExplanationValue[];
+}
+
+export interface ReportScaleExplanationValue {
+    value: number;
+    description: string;
+}
+
+
+/////////////////////////////
+/// Config //////////////////
+/////////////////////////////
 
 export interface ReportConfig {
     numberPagesFrom: number;
@@ -78,6 +93,7 @@ export interface ReportConfigSubsection {
     questions: ReportConfigQuestion[];
     scale: number;
     scaleInterval: number;
+    scaleExplanation: ReportScaleExplanation;
     showAsPercent: number;
     excludeGlobalNorms?: boolean;
     excludeIndustryNorms?: boolean;

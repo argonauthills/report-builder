@@ -46,6 +46,7 @@ function transformSubsection(data:types.RawDatum[], configSubsection:types.Repor
         globalNorm: mean(questions.map((q)=>q.globalNorm)),
         scale: configSubsection.scale || 1,
         scaleInterval: configSubsection.scaleInterval || 1,
+        scaleExplanation: configSubsection.scaleExplanation,
         showAsPercent: configSubsection.showAsPercent,
         excludeIndustryNorms: configSubsection.excludeIndustryNorms,
         excludeGlobalNorms: configSubsection.excludeGlobalNorms,
