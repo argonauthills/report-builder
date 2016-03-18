@@ -396,24 +396,24 @@
             </header>
 
             {% for subsection in section.subsections %}
-                {% if subsection.scaleExplanation %}
-                <section>
-                    <div class="medium-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
-                    {% for value in subsection.scaleExplanation.scaleValues %}
-                    <div class="scale-explanation-entry center-text">
-                        <div class="margin-small">
-                            <div class="scale-explanation-value-outer">
-                                <div class="scale-explanation-value-middle large-text">
-                                    <span class="scale-explanation-value-inner">{{value.value}}</span>
+                <section class="report-section no-page-break stretch-width">
+                    {% if subsection.scaleExplanation %}
+                    <section>
+                        <div class="medium-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
+                        {% for value in subsection.scaleExplanation.scaleValues %}
+                        <div class="scale-explanation-entry center-text">
+                            <div class="margin-small">
+                                <div class="scale-explanation-value-outer">
+                                    <div class="scale-explanation-value-middle large-text">
+                                        <span class="scale-explanation-value-inner">{{value.value}}</span>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="center-text small-text margin-small">{{value.description}}</div>
                         </div>
-                        <div class="center-text small-text margin-small">{{value.description}}</div>
-                    </div>
-                    {% endfor %}
-                </section>
-                {% endif %}
-                <section class="report-section no-page-break stretch-width">
+                        {% endfor %}
+                    </section>
+                    {% endif %}
                     {% if !subsection.excludeKey %}
                     <section class="report-key {% if subsection.excludeHeader %}absolute-top absolute-right{% endif %}">
                         {% if !subsection.excludeIndustryNorms %}
