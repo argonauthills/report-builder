@@ -60,9 +60,11 @@ function transformQuestion(data:types.RawDatum[], configQuestion:types.ReportCon
     var points = dataPoints(data, configQuestion.id, configQuestion.includeNulls)
     var industryNorm = getNorm(industryNorms, configQuestion.id)
     var globalNorm = getNorm(globalNorms, configQuestion.id)
+    var orgScore = mean(points)
+    if (_.isNaN(orgScore)) throw new Error("The orgScore for question "+configQuestion.id+" is NaN.")
     return {
         description: configQuestion.description,
-        orgScore: mean(points),
+        orgScore: orgScore,
         industryNorm: industryNorm,
         globalNorm: globalNorm,
     }
