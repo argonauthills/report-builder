@@ -362,6 +362,7 @@
             <h2 class="separator">{{htmlFriendly(report.title)}}</h2>
             <div>{{htmlFriendly(report.companyName)}}</div>
             <div>Industry: {{htmlFriendly(report.industryName)}}</div>
+            <div>Number of Responses: {{report.numResponses}}</div>
         </header>
         {% endif %}
         {% if !report.excludeTableOfContents %}
@@ -443,18 +444,22 @@
                                 </td>
                                 <td class="results-table-cell bar-chart-cell-width large-row-height relative">
                                     <div class="bar-chart-box">
+                                        {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
+                                            <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                                        {% endfor %}
                                         <div class="bar-chart bar-chart-large">
                                             <div class="bar-chart-bar" style="width:{{100 * subsection.orgScore / subsection.scale}}%;"></div>
                                             {% if !subsection.excludeIndustryNorms %}
+                                            {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
+                                                <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
+                                            {% endfor %}
                                             <div class="bar-chart-symbol-1" style="left:{{100 * subsection.industryNorm / subsection.scale}}%"></div>
                                             {% endif %}
                                             {% if !subsection.excludeGlobalNorms %}
                                             <div class="bar-chart-symbol-2" style="left:{{100 * subsection.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
                                             {% endif %}
                                         </div>
-                                        {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
-                                            <div class="bar-chart-division bar-chart-division-dotted" style="left:{{tick.percentOfScale}}%"></div>
-                                        {% endfor %}
+
                                     </div>
                                 </td>
                             </tr>
@@ -501,7 +506,7 @@
                         {% endif %}
                         {% for question in subsection.questions %}
                         <tr class="results-table-row medium-text">
-                            <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height small-text left-text">{{htmlFriendly(question.description)}}</td>
+                            <td class="results-table-cell results-table-cell-padding question-cell-width normal-row-height medium-text left-text">{{htmlFriendly(question.description)}}</td>
                             <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{displayNumber(subsection.showAsPercent, question.orgScore)}}</td>
                             {% if !subsection.excludeIndustryNorms %}
                             <td class="results-table-cell results-table-cell-padding datum-cell-width normal-row-height">{{displayNumber(subsection.showAsPercent, question.industryNorm)}}</td>
@@ -511,8 +516,14 @@
                             {% endif %}
                             <td class="results-table-cell bar-chart-cell-width normal-row-height relative">
                                 <div class="bar-chart-box">
+                                    {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
+                                        <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
+                                    {% endfor %}
                                     <div class="bar-chart">
                                         <div class="bar-chart-bar" style="width:{{100 * question.orgScore / subsection.scale}}%;"></div>
+                                        {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
+                                            <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
+                                        {% endfor %}
                                         {% if !subsection.excludeIndustryNorms %}
                                         <div class="bar-chart-symbol-1" style="left:{{100 * question.industryNorm / subsection.scale}}%"></div>
                                         {% endif %}
@@ -520,9 +531,7 @@
                                         <div class="bar-chart-symbol-2" style="left:{{100 * question.globalNorm / subsection.scale}}%"><div class="bar-chart-symbol-2-inner"></div></div>
                                         {% endif %}
                                     </div>
-                                    {% for tick in tickMarks(subsection.scale, subsection.scaleInterval) %}
-                                        <div class="bar-chart-division" style="left:{{tick.percentOfScale}}%"></div>
-                                    {% endfor %}
+
                                 </div>
                             </td>
                         </tr>

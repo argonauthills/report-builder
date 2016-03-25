@@ -12,6 +12,7 @@ export interface Report {
     industryName: string;
     footers: ReportFooters;
     sections: ReportSection[];
+    numResponses: number;
 }
 
 export interface ReportSection {

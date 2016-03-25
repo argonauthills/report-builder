@@ -38,6 +38,7 @@ function main() {
             // consolee.log(row['ProjectID'], typeof row['ProjectID'], companyId, typeof companyId)
             return row['ProjectID'] == companyId
         })
+        if (!orgInfo) throw new Error("couldn't find orgInfo for ProjectID "+ companyId)
         var industryCode = orgInfo['IndustryCode']
         var companyName = orgInfo['OrgName']
         var industryName = orgInfo['IndustryType']

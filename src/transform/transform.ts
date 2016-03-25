@@ -18,7 +18,8 @@ export function rawToReport(data:types.RawDatum[], config:types.ReportConfig, gl
         excludeTableOfContents: config.excludeTableOfContents,
         excludeCoverPage: config.excludeCoverPage,
         excludeSectionNumbers: config.excludeSectionNumbers,
-        footers: config.footers
+        footers: config.footers,
+        numResponses: data.length
     }
 }
 
