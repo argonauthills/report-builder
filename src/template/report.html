@@ -397,10 +397,10 @@
             </header>
 
             {% for subsection in section.subsections %}
-                <section class="report-section no-page-break stretch-width">
+                <section class="report-section no-page-break stretch-width margin-small">
                     {% if subsection.scaleExplanation %}
                     <section>
-                        <div class="medium-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
+                        <div class="large-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
                         {% for value in subsection.scaleExplanation.scaleValues %}
                         <div class="scale-explanation-entry center-text">
                             <div class="margin-small">
@@ -410,7 +410,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="center-text medium-text margin-small">{{value.description}}</div>
+                            <div class="center-text small-text margin-small">{{value.description}}</div>
                         </div>
                         {% endfor %}
                     </section>
