@@ -405,7 +405,7 @@
             {% for subsection in section.subsections %}
                 <section class="report-section no-page-break stretch-width">
                     {% if subsection.scaleExplanation %}
-                    <section class="margin-small">
+                    <section class="margin-bigger">
                         <div class="large-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
                         {% for value in subsection.scaleExplanation.scaleValues %}
                         <div class="scale-explanation-entry center-text">
