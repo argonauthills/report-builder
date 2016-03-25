@@ -61,6 +61,12 @@
                 margin-top: 20px;
                 margin-bottom: 20px;
             }
+
+            .margin-bigger {
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
             .margin-small {
                 margin-top: 5px;
                 margin-bottom: 5px;
@@ -397,9 +403,9 @@
             </header>
 
             {% for subsection in section.subsections %}
-                <section class="report-section no-page-break stretch-width margin-small">
+                <section class="report-section no-page-break stretch-width">
                     {% if subsection.scaleExplanation %}
-                    <section>
+                    <section class="margin-small">
                         <div class="large-text">{{htmlFriendly(subsection.scaleExplanation.description)}}</div>
                         {% for value in subsection.scaleExplanation.scaleValues %}
                         <div class="scale-explanation-entry center-text">
